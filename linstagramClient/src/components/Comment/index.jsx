@@ -62,7 +62,7 @@ export default function Comment({ data, addLikeOnComment, removeLikeOnComment, c
             </div>
             <div className={s.comment_underline}>
                 <p>Liked: {comment.likes ? comment.likes.length : 0}</p>
-                <img onClick={openModal} className={s.additionally_func} src="../../../public/additionally-function.svg" alt="additionally function of comment" />
+                <img onClick={openModal} className={s.additionally_func} src="/additionally-function.svg" alt="additionally function of comment" />
                 {isCommentModal && (
                     <RemovingCommentModal
                         id={comment.id}
