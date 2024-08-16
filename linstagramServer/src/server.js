@@ -6,7 +6,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 const dbClient = new MongoClient(config.db);
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: 'https://linstagram-mu.vercel.app'
+}));
 app.use(express.json());
 
 const users = dbClient.db('social').collection('users');
