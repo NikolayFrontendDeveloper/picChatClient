@@ -6,7 +6,7 @@
             "use": "@vercel/static-build"
         },
         {
-            "src": "linstagramServer/src/server.js",
+            "src": "linstagramServer/src/**/*.js",
             "use": "@vercel/node"
         }
         ],
