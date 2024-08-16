@@ -20,5 +20,8 @@
     "multer-gridfs-storage": "^5.0.2",
     "uuid": "^10.0.0"
   },
+  "engines": {
+    "node": "20.12.0"
+  },
   "type": "module"
 }

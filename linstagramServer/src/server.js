@@ -3,6 +3,7 @@ import express from "express";
 import { MongoClient, ObjectId } from "mongodb";
 import cors from 'cors';
 import { v4 as uuidv4 } from 'uuid';
+require('dotenv').config();
 
 const dbClient = new MongoClient(config.db);
 const app = express();
