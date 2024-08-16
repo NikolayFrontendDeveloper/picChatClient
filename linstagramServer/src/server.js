@@ -7,9 +7,7 @@ require('dotenv').config();
 
 const dbClient = new MongoClient(config.db);
 const app = express();
-app.use(cors({
-    origin: 'https://linstagram-mu.vercel.app'
-}));
+app.use();
 app.use(express.json());
 
 const users = dbClient.db('social').collection('users');
