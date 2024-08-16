@@ -24,7 +24,7 @@ const App = () => {
     }, []);
 
     const getData = () => {
-        fetch("http://localhost:3000/data")
+        fetch("https://linstagram-mu.vercel.app/data")
             .then((res) => res.json())
             .then((data) => {
                 setData(data);
@@ -32,8 +32,7 @@ const App = () => {
             .then(() => {
                 setLoading(false);
             })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
+            .catch(e => {
                 setLoading(false);
             });
     }
@@ -87,7 +86,7 @@ const App = () => {
             token: localStorage.getItem('id')
         };
 
-        fetch("http://localhost:3000/get-user", {
+        fetch("https://linstagram-mu.vercel.app/get-user", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
@@ -98,7 +97,7 @@ const App = () => {
         .then((data) => {
             setUser(data);
         })
-        .catch(error => console.error('Error fetching user data:', error));
+        .catch();
     };
 
     const fetchPosts = () => {
@@ -106,7 +105,7 @@ const App = () => {
             token: localStorage.getItem('id')
         };
 
-        fetch("http://localhost:3000/get-posts", {
+        fetch("https://linstagram-mu.vercel.app/get-posts", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
@@ -132,7 +131,7 @@ const App = () => {
             password: values.password,
         };
 
-        fetch("http://localhost:3000/auth/login", {
+        fetch("https://linstagram-mu.vercel.app/auth/login", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
@@ -157,7 +156,7 @@ const App = () => {
         password: values.password,
         };
 
-        fetch("http://localhost:3000/auth/signup", {
+        fetch("https://linstagram-mu.vercel.app/auth/signup", {
         method: "POST",
         body: JSON.stringify(payload),
         headers: {
@@ -175,7 +174,7 @@ const App = () => {
     };
 
     const uploadPost = (payload) => {
-        fetch("http://localhost:3000/posts", {
+        fetch("https://linstagram-mu.vercel.app/posts", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
@@ -192,7 +191,7 @@ const App = () => {
     }
 
     const deletePost = (payload, cancelModal) => {
-        fetch("http://localhost:3000/delete-post", {
+        fetch("https://linstagram-mu.vercel.app/delete-post", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
