@@ -75,7 +75,7 @@ export default function Post({ data, user, post, updatePostAfterComment, updateP
             "imageUrl": post.imageUrl
         };
 
-        fetch("http://localhost:3000/posts/like", {
+        fetch("https://linstagramserver-1.onrender.com/posts/like", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
@@ -97,7 +97,7 @@ export default function Post({ data, user, post, updatePostAfterComment, updateP
             "imageUrl": post.imageUrl
         };
     
-        fetch("http://localhost:3000/posts/unlike", {
+        fetch("https://linstagramserver-1.onrender.com/posts/unlike", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
