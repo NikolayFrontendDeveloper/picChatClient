@@ -1,0 +1,35 @@
+.user_container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    img {
+        width: 44px;
+        border-radius: 50%;
+    }
+
+    .user_data {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .user_name {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .subscribe_btn {
+            background-color: #0095f6;
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .signed_btn {
+            background-color: #363636;
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+        }
+    }
+}

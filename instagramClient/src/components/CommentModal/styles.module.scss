@@ -1,0 +1,169 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+
+    .modal_wrapper {
+        top: -40%;
+        position: absolute;
+        width: 100%;
+        height: 140%;
+        background-color: rgba(0, 0, 0, 0.291);
+    }
+
+    .modal_body {
+        z-index: 1;
+        width: 80%;
+        height: 95%;
+        background-color: white;
+        display: flex;
+
+        .post_image {
+            width: 60%;
+            object-fit: cover;
+        }
+
+        .comments_wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .comment_user_container {
+                display: flex;
+                gap: 5px;
+                align-items: center;
+
+                img {
+                    margin: 0;
+                }
+            }
+
+            .username {
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            .username_container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 5px;
+                padding: 10px;
+                border-bottom: 1px solid black;
+
+                .username_container_box {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+
+                .post_menu_btn {
+                    width: 20px;
+                    margin: 5px;
+                }
+            }
+
+            .user_icon {
+                width: 32px;
+                border-radius: 50%;
+            }
+
+            .comments_box {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+                border-bottom: 1px solid black;
+                height: 100%;
+
+                .comment_container {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+
+                .comment_box {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+
+                    .comment_wrapper {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        .user_icon {
+                            width: 32px;
+                            border-radius: 50%;
+                        }
+    
+                        img {
+                            width: 15px;
+                            margin-top: 9px;
+                        }
+                    }
+    
+                    .comment_underline {
+                        display: flex;
+                        gap: 30px;
+    
+                        .additionally_func {
+                            display: none;
+                            cursor: pointer;
+                            width: 15px;
+                        }
+                    }
+
+                    &:hover .comment_underline .additionally_func {
+                        display: block;
+                    }
+                }
+            }
+
+            .image_functions_box {
+                display: flex;
+                justify-content: space-between;
+                padding: 0 10px;
+
+                .like_comment_wrapper {
+                    display: flex;
+                    gap: 10px;
+                }
+
+                img {
+                    width: 24px;
+                    cursor: pointer;
+                }
+            }
+
+            .likes_amount {
+                padding: 0 10px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid black;
+            }
+
+            .comment_post_wrapper {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+                padding-top: 0;
+
+                .comment_input {
+                    border: 0;
+
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+}

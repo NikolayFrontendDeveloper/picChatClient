@@ -1,0 +1,83 @@
+.page_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 50%;
+    align-items: center;
+    margin-left: 30%;
+    padding-top: 3em;
+
+    .user_information {
+        display: flex;
+        gap: 5em;
+
+        .profile_img {
+            width: 150px;
+            border-radius: 50%;
+        }
+
+        .user_data_wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+
+            .user_data_line {
+                display: flex;
+                gap: 15px;
+                align-items: center;
+
+                img {
+                    width: 22px;
+                }
+
+                .user_data_name {
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+                .subscribe_btn {
+                    background-color: #0095f6;
+                    padding: 10px;
+                    border-radius: 10px;
+                    color: white;
+                }
+
+                .signed_btn {
+                    background-color: #363636;
+                    padding: 10px;
+                    border-radius: 10px;
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .story_wrapper {
+        display: flex;
+        gap: 1em;
+    }
+
+    .posts_wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid #000;
+        justify-content: center;
+
+        .choose_posts_wrapper {
+            display: flex;
+            gap: 5em;
+            justify-content: center;
+
+            .choose_posts_btn {
+                padding: 20px;
+            }
+        }
+
+        .posts_container {
+            display: flex;
+            row-gap: 0.5%;
+            flex-wrap: wrap;
+        }
+    }
+}
