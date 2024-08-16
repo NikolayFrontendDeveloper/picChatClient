@@ -4,20 +4,12 @@
         {
             "src": "linstagramClient/package.json",
             "use": "@vercel/static-build"
-        },
-        {
-            "src": "linstagramServer/src/**/*.js",
-            "use": "@vercel/node"
         }
         ],
     "routes": [
         {
             "src": "/api/(.*)",
             "dest": "/linstagramServer/src/server.js"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/linstagramClient/"
         }
     ]
 }
