@@ -300,7 +300,9 @@ const App = () => {
         console.log(user);
     };
 
-    
+    if (!id) {
+        navigate("/login")
+    }
     if (loading) {
         return <div>Loading...</div>;
     } else {
