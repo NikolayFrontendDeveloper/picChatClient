@@ -57,7 +57,7 @@ export default function ProfilePage({ updateDataAfterRemoveSubscribe, updateData
     };
 
     const uploadAva = (payload) => {
-        fetch("http://localhost:3000/add-ava", {
+        fetch("https://linstagramserver-1.onrender.com/add-ava", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
@@ -72,7 +72,7 @@ export default function ProfilePage({ updateDataAfterRemoveSubscribe, updateData
             targetToken: token
         }
 
-        fetch("http://localhost:3000/subscribe", {
+        fetch("https://linstagramserver-1.onrender.com/subscribe", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
@@ -93,7 +93,7 @@ export default function ProfilePage({ updateDataAfterRemoveSubscribe, updateData
             targetToken: token
         }
 
-        fetch("http://localhost:3000/remove-subscribe", {
+        fetch("https://linstagramserver-1.onrender.com/remove-subscribe", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
@@ -113,7 +113,7 @@ export default function ProfilePage({ updateDataAfterRemoveSubscribe, updateData
             token: localStorage.getItem('id')
         }
 
-        fetch("http://localhost:3000/remove-ava", {
+        fetch("https://linstagramserver-1.onrender.com/remove-ava", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
