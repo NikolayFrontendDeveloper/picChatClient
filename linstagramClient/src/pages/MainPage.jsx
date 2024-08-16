@@ -2,11 +2,13 @@ import Post from '../components/Post/Post';
 import s from "./styles.module.scss";
 import SearchedUser from '../components/SearchedUser';
 import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function MainPage({ user, posts, data, updateDataAfterSubscribe, updateDataAfterRemoveSubscribe, updatePostAfterComment, updatePostComment, updateLikesInPost }) {
     const [users, setUsers] = useState([]);
     const [visiblePosts, setVisiblePosts] = useState([]);
     const [page, setPage] = useState(1);
+    const navigate = useNavigate();
     const POSTS_PER_PAGE = 10;
 
     useEffect(() => {
