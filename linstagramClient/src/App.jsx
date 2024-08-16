@@ -24,7 +24,7 @@ const App = () => {
     }, []);
 
     const getData = () => {
-        fetch("https://linstagram-mu.vercel.app/data")
+        fetch("https://linstagramserver-1.onrender.com/data")
             .then((res) => res.json())
             .then((data) => {
                 setData(data);
@@ -86,7 +86,7 @@ const App = () => {
             token: localStorage.getItem('id')
         };
 
-        fetch("https://linstagram-mu.vercel.app/get-user", {
+        fetch("https://linstagramserver-1.onrender.com/get-user", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
@@ -105,7 +105,7 @@ const App = () => {
             token: localStorage.getItem('id')
         };
 
-        fetch("https://linstagram-mu.vercel.app/get-posts", {
+        fetch("https://linstagramserver-1.onrender.com/get-posts", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
@@ -131,7 +131,7 @@ const App = () => {
             password: values.password,
         };
 
-        fetch("https://linstagram-mu.vercel.app/auth/login", {
+        fetch("https://linstagramserver-1.onrender.com/auth/login", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
@@ -156,7 +156,7 @@ const App = () => {
         password: values.password,
         };
 
-        fetch("https://linstagram-mu.vercel.app/auth/signup", {
+        fetch("https://linstagramserver-1.onrender.com/auth/signup", {
         method: "POST",
         body: JSON.stringify(payload),
         headers: {
@@ -174,7 +174,7 @@ const App = () => {
     };
 
     const uploadPost = (payload) => {
-        fetch("https://linstagram-mu.vercel.app/posts", {
+        fetch("https://linstagramserver-1.onrender.com/posts", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
@@ -191,7 +191,7 @@ const App = () => {
     }
 
     const deletePost = (payload, cancelModal) => {
-        fetch("https://linstagram-mu.vercel.app/delete-post", {
+        fetch("https://linstagramserver-1.onrender.com/delete-post", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
