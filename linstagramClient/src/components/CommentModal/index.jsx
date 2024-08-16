@@ -19,7 +19,7 @@ export default function CommentModal({ deletePost, postAva, data, user, cancelMo
         };
 
         try {
-            const response = await fetch("http://localhost:3000/posts/add-comment", {
+            const response = await fetch("https://linstagramserver-1.onrender.com/posts/add-comment", {
                 method: "POST",
                 body: JSON.stringify(payload),
                 headers: {
@@ -56,7 +56,7 @@ export default function CommentModal({ deletePost, postAva, data, user, cancelMo
         };
 
         try {
-            const response = await fetch("http://localhost:3000/posts/comment/like", {
+            const response = await fetch("https://linstagramserver-1.onrender.com/posts/comment/like", {
                 method: "POST",
                 body: JSON.stringify(payload),
                 headers: {
@@ -94,7 +94,7 @@ export default function CommentModal({ deletePost, postAva, data, user, cancelMo
         };
 
         try {
-            const response = await fetch("http://localhost:3000/posts/comment/unlike", {
+            const response = await fetch("https://linstagramserver-1.onrender.com/posts/comment/unlike", {
                 method: "POST",
                 body: JSON.stringify(payload),
                 headers: {
@@ -132,7 +132,7 @@ export default function CommentModal({ deletePost, postAva, data, user, cancelMo
         };
     
         try {
-            const response = await fetch("http://localhost:3000/posts/remove-comment", {
+            const response = await fetch("https://linstagramserver-1.onrender.com/posts/remove-comment", {
                 method: "POST",
                 body: JSON.stringify(payload),
                 headers: {
@@ -187,7 +187,7 @@ export default function CommentModal({ deletePost, postAva, data, user, cancelMo
                         {post.text && (
                             <div onClick={() => {navigate(`/profile/${post.token}`)}} className={s.comment_container}>
                                 {postAva ? (
-                                    <img className={s.user_icon} src={user.avaUrl} alt="ava icon" />
+                                    <img className={s.user_icon} src={postAva} alt="ava icon" />
                                 ) : (
                                     <div className={s.user_icon_placeholder}></div>
                                 )}
