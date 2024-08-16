@@ -38,11 +38,11 @@ export default function Layout({id, logOut, user, data}) {
                     <>
                         <div className={s.aside_box}>
                             <NavLink to={"/login"}>
-                                <img className={s.aside_icons} src="../public/login-icon.svg" alt="home-icon" />
+                                <img className={s.aside_icons} src="/login-icon.svg" alt="home-icon" />
                                 <p>Log In</p>
                             </NavLink>
                             <NavLink to={"/signup"}>
-                                <img className={s.aside_icons} src="../public/signup-icon.svg" alt="home-icon" />
+                                <img className={s.aside_icons} src="/signup-icon.svg" alt="home-icon" />
                                 <p>Sign Up</p>
                             </NavLink>
                         </div>
@@ -56,15 +56,15 @@ export default function Layout({id, logOut, user, data}) {
                                         <p className={s.page_name}>Linstagram</p>
                                     </NavLink>
                                     <NavLink to={"/"}>
-                                        <img className={s.aside_icons} src="../public/home-icon.svg" alt="home-icon" />
+                                        <img className={s.aside_icons} src="/home-icon.svg" alt="home-icon" />
                                         <p>Main</p>
                                     </NavLink>
                                     <NavLink onClick={changeSearchingModal}>
-                                        <img className={s.aside_icons} src="../public/searching-icon.svg" alt="home-icon" />
+                                        <img className={s.aside_icons} src="/searching-icon.svg" alt="home-icon" />
                                         <p>Search</p>
                                     </NavLink>
                                     <NavLink to={"/add"}>
-                                        <img className={s.aside_icons} src="../public/add-icon.svg" alt="home-icon" />
+                                        <img className={s.aside_icons} src="/add-icon.svg" alt="home-icon" />
                                         <p>Add</p>
                                     </NavLink>
                                     <NavLink to={`/profile/${localStorage.getItem('id')}`}>
@@ -89,13 +89,13 @@ export default function Layout({id, logOut, user, data}) {
                                             <p onClick={changeSearchingModal} className={s.page_name}>L</p>
                                         </NavLink>
                                         <NavLink to={"/"}>
-                                            <img onClick={changeSearchingModal} className={s.aside_icons} src="../public/home-icon.svg" alt="home-icon" />
+                                            <img onClick={changeSearchingModal} className={s.aside_icons} src="/home-icon.svg" alt="home-icon" />
                                         </NavLink>
                                         <NavLink>
-                                            <img onClick={changeSearchingModal} className={s.aside_icons} src="../public/searching-icon.svg" alt="home-icon" />
+                                            <img onClick={changeSearchingModal} className={s.aside_icons} src="/searching-icon.svg" alt="home-icon" />
                                         </NavLink>
                                         <NavLink to={"/add"}>
-                                            <img onClick={changeSearchingModal} className={s.aside_icons} src="../public/add-icon.svg" alt="home-icon" />
+                                            <img onClick={changeSearchingModal} className={s.aside_icons} src="/add-icon.svg" alt="home-icon" />
                                         </NavLink>
                                         <NavLink onClick={changeSearchingModal} to={`/profile/${localStorage.getItem('id')}`}>
                                             {user && user.avaUrl ? (
