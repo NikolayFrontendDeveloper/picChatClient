@@ -19,7 +19,7 @@ export default function SearchedUser ({ user, onClick, updateDataAfterSubscribe,
             targetToken: user._id
         }
 
-        fetch("http://localhost:3000/subscribe", {
+        fetch("https://linstagramserver-1.onrender.com/subscribe", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
@@ -39,7 +39,7 @@ export default function SearchedUser ({ user, onClick, updateDataAfterSubscribe,
             targetToken: user._id
         }
 
-        fetch("http://localhost:3000/remove-subscribe", {
+        fetch("https://linstagramserver-1.onrender.com/remove-subscribe", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {

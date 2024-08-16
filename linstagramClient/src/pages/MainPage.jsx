@@ -42,6 +42,10 @@ export default function MainPage({ user, posts, data, updateDataAfterSubscribe, 
         setUsers(filteredUsers);
     }, [data]);
 
+    if(!localStorage.getItem('id')) {
+        navigate('/login');
+    }
+
     return (
         <div className={s.container}>
             <div className={s.posts_container}>

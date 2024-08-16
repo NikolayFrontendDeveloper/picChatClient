@@ -10,8 +10,8 @@ import "./reset.css"
 import "./styles.module.scss"
 
 const App = () => {
-    const [id, setId] = useState(localStorage.getItem("id") || false);
     const navigate = useNavigate();
+    const [id, setId] = useState(localStorage.getItem("id") || false);
     const [posts, setPosts] = useState([]);
     const [user, setUser] = useState(null);
     const [data, setData] = useState([]);
@@ -300,9 +300,6 @@ const App = () => {
         console.log(user);
     };
 
-    if (!id) {
-        navigate("/login")
-    }
     if (loading) {
         return <div>Loading...</div>;
     } else {
