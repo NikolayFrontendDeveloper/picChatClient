@@ -1,0 +1,23 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "linstagramClient/package.json",
+            "use": "@vercel/static-build"
+        },
+        {
+            "src": "linstagramServer/src/**/*.js",
+            "use": "@vercel/node"
+        }
+        ],
+    "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "/linstagramServer/src/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/linstagramClient/$1"
+        }
+    ]
+}
