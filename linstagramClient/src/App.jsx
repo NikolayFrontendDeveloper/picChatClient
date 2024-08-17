@@ -190,7 +190,19 @@ const App = () => {
         console.log(payload);
     }
 
-    const deletePost = (payload, cancelModal) => {
+    const deletePost = ({ token, imageUrl}) => {
+        const payload = {
+            token: token,
+            imageUrl: imageUrl
+        }
+
+        function extractPublicId(url) {
+            const parts = url.split('/');
+            const publicIdWithExtension = parts[parts.length - 1];
+            const publicId = publicIdWithExtension.split('.')[0];
+            return publicId;
+        }
+
         fetch("https://linstagramserver-1.onrender.com/delete-post", {
             method: "POST",
             body: JSON.stringify(payload),
@@ -200,11 +212,23 @@ const App = () => {
             })
             .then((res) => res.json())
             .then((data) => {
-                cancelModal();
+                console.log(data);
+            });
+        fetch("https://linstagramserver-1.onrender.com/delete-image", {
+            method: "POST",
+            body: JSON.stringify({
+                "publicId": extractPublicId(imageUrl),
+                "typeFile": "image"
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+            })
+            .then((res) => res.json())
+            .then((data) => {
                 console.log(data);
                 window.location.reload();
             });
-        console.log(payload);
     }
 
     const updateLikesInPost = (postUrl, likes) => {
@@ -300,6 +324,10 @@ const App = () => {
         console.log(user);
     };
 
+    const test = () => {
+        console.log("Ok")
+    }
+
     if (loading) {
         return <div>Loading...</div>;
     } else {
@@ -314,7 +342,9 @@ const App = () => {
                         data={data}
                         updatePostAfterComment={updatePostAfterComment}
                         updatePostComment={updatePostComment}
-                        updateLikesInPost={updateLikesInPost}/>} />
+                        updateLikesInPost={updateLikesInPost}
+                        deletePost={deletePost}/>}
+                        />
                     <Route
                     path="login"
                     element={<LoginPage loginHandler={loginHandler} />}

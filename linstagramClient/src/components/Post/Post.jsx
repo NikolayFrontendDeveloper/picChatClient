@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import CommentModal from "../CommentModal";
 
-export default function Post({ data, user, post, updatePostAfterComment, updatePostComment, updateLikesInPost }) {
+export default function Post({ data, user, post, deletePost, updatePostAfterComment, updatePostComment, updateLikesInPost }) {
     const date = new Date();
     const range = date - post.time;
     const [likes, setLikes] = useState(post.likes || []);
@@ -145,6 +145,7 @@ export default function Post({ data, user, post, updatePostAfterComment, updateP
                         removeLike={removeLike} 
                         updatePostAfterComment={updatePostAfterComment}
                         updatePostComment={updatePostComment}
+                        deletePost={deletePost}
                     />
                 )}
                 <img className={s.post_img} onClick={openModal} src={post.imageUrl} alt="user image" />
