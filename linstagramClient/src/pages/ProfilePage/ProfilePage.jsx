@@ -188,7 +188,7 @@ export default function ProfilePage({ updateDataAfterRemoveSubscribe, updateData
                         </div>
                         <div className={s.posts_container}>
                             {user && user.posts && user.posts.length > 0 ? (
-                                user.posts.map((post, index) => (
+                                user.posts.sort((a, b) => b.time - a.time).map((post, index) => (
                                     <UserPost
                                         key={index}
                                         deletePost={deletePost}
