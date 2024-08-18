@@ -53,7 +53,7 @@ export default function Layout({id, logOut, user, data}) {
                             <>
                                 <div className={s.aside_box}>
                                     <NavLink to={"/"}>
-                                        <p className={s.page_name}>Linstagram</p>
+                                        <p className={s.page_name}>PicChat</p>
                                     </NavLink>
                                     <NavLink to={"/"}>
                                         <img className={s.aside_icons} src="/home-icon.svg" alt="home-icon" />
