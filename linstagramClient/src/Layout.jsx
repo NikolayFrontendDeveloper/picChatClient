@@ -86,7 +86,7 @@ export default function Layout({id, logOut, user, data}) {
                                 <div className={s.aside_left_wrapper}>
                                     <div className={s.aside_box}>
                                         <NavLink to={"/"}>
-                                            <p onClick={changeSearchingModal} className={s.page_name}>L</p>
+                                            <p onClick={changeSearchingModal} className={s.page_name}>P</p>
                                         </NavLink>
                                         <NavLink to={"/"}>
                                             <img onClick={changeSearchingModal} className={s.aside_icons} src="/home-icon.svg" alt="home-icon" />
