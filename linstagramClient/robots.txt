@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pic-chat-me.vercel.app/sitemap.xml
