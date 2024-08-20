@@ -2,13 +2,20 @@ import s from './styles.module.scss'
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-export default function SearchedUser ({ user, onClick, updateDataAfterSubscribe, updateDataAfterRemoveSubscribe }) {
+export default function SearchedUser ({ user, onClick, updateDataAfterSubscribe, updateDataAfterRemoveSubscribe, cancelModal }) {
     const navigate = useNavigate();
     const [isSigned, setIsSigned] = useState(user?.subscribers?.includes(localStorage.getItem('id')) || false);
+
+    useEffect(() => {
+        setIsSigned(user?.subscribers?.includes(localStorage.getItem('id')) || false);
+    }, [user])
 
     const navigateToProfile = () => {
         if (onClick) {
             onClick();
+        }
+        if (cancelModal) {
+            cancelModal();
         }
         navigate(`/profile/${user._id}`)
     }
@@ -30,7 +37,6 @@ export default function SearchedUser ({ user, onClick, updateDataAfterSubscribe,
             console.log(err);
         })
         updateDataAfterSubscribe(localStorage.getItem('id'), user._id)
-        setIsSigned(user?.subscribers?.includes(localStorage.getItem('id')) || false);
     }
 
     const removeSubscribe = () => {
@@ -50,20 +56,21 @@ export default function SearchedUser ({ user, onClick, updateDataAfterSubscribe,
             console.log(err);
         })
         updateDataAfterRemoveSubscribe(localStorage.getItem('id'), user._id)
-        setIsSigned(user?.subscribers?.includes(localStorage.getItem('id')) || false);
     }
 
     return (
         <div className={s.user_container}>
-            {user && user.avaUrl ? (
-                <img onClick={navigateToProfile} className={s.user_ava} src={user.avaUrl} alt="ava icon" />
-            ) : (
-                <img onClick={navigateToProfile} className={s.user_ava} src="/ava-icon.svg" alt="ava icon" />
-            )}
-            <div className={s.user_data}>
+            <div className={s.user_img_box}>
+                {user && user.avaUrl ? (
+                    <img onClick={navigateToProfile} className={s.user_ava} src={user.avaUrl} alt="ava icon" />
+                ) : (
+                    <img onClick={navigateToProfile} className={s.user_ava} src="/ava-icon.svg" alt="ava icon" />
+                )}
                 <p onClick={navigateToProfile} className={s.user_name}>{user.username}</p>
+            </div>
+            <div className={s.user_data}>
                 {
-                    !onClick && (
+                    !onClick && user._id !== localStorage.getItem('id') && (
                         !isSigned ? (
                             <button onClick={subscribe} className={s.subscribe_btn}>Subscribe</button>
                         ) : (

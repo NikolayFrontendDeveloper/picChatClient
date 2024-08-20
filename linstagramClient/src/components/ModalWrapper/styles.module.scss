@@ -23,8 +23,9 @@
         background-color: white;
         display: flex;
         flex-direction: column;
-        width: 20%;
+        width: fit-content;
         border-radius: 15px;
+        padding: 10px;
 
         p {
             text-align: center;
@@ -33,7 +34,7 @@
             cursor: pointer;
             font-size: 18px;
             font-weight: bold;
-            border-top: 1px solid black;
+            // border-top: 1px solid black;
         }
     }
 }

@@ -77,7 +77,6 @@ const App = () => {
             return user;
         });
     
-        console.log(updatedData);
         setData(updatedData);
     };
     

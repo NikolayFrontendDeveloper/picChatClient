@@ -4,6 +4,7 @@ import s from "./styles.module.scss";
 import UserPost from '../../components/UserPost/index';
 import AvaModal from "../../components/AvaModal";
 import axios from 'axios';
+import SubscribeModal from "../../components/SubscribeModal";
 
 export default function ProfilePage({ updateDataAfterRemoveSubscribe, updateDataAfterSubscribe, deletePost, data, updatePostAfterComment, updatePostComment, updateLikesInPost, updateAva }) {
     const [modal, setModal] = useState(false);
@@ -12,16 +13,18 @@ export default function ProfilePage({ updateDataAfterRemoveSubscribe, updateData
     const [user, setUser] = useState(data.find(user => user._id === token) || null);
     const [currentUser, setCurrentUser] = useState(data.find(user => user._id === localStorage.getItem('id')) || null);
     const [isSigned, setIsSigned] = useState(currentUser?.subscriptions?.includes(token) || false);
-    const [subscribers, setSubscribers] = useState(user.subscribers?.length || 0);
-    const [subscriptions, setSubscriptions] = useState(user.subscriptions?.length || 0);
+    const [subscribers, setSubscribers] = useState(user.subscribers || []);
+    const [subscriptions, setSubscriptions] = useState(user.subscriptions || []);
+    const [subscribersModal, setSubscribersModal] = useState(false);
+    const [subscriptionsModal, setSubscriptionsModal] = useState(false);
 
     useEffect(() => {
         setUser(data.find(user => user._id === token) || null);
-        setSubscriptions(user.subscriptions?.length || 0);
-        setSubscribers(user.subscribers?.length || 0);
+        setSubscriptions(user.subscriptions || []);
+        setSubscribers(user.subscribers || []);
         setIsSigned(currentUser?.subscriptions?.includes(token) || false);
         setCurrentUser(data.find(user => user._id === localStorage.getItem('id')) || null);
-    }, [token, user])
+    }, [token, data])
 
     const handleFileChange = async (e) => {
         const selectedFile = e.target.files[0];
@@ -129,6 +132,14 @@ export default function ProfilePage({ updateDataAfterRemoveSubscribe, updateData
         setModal(false);
     }
 
+    const cancelSubscribersModal = () => {
+        setSubscribersModal(false);
+    }
+
+    const cancelSubscriptionsModal = () => {
+        setSubscriptionsModal(false);
+    }
+
     if (!user) {
         return <div>User not found</div>;
     }
@@ -143,6 +154,22 @@ export default function ProfilePage({ updateDataAfterRemoveSubscribe, updateData
                             handleFileChange={handleFileChange}
                             removeAva={removeAva}
                         />
+                    )}
+                    {subscribersModal && (
+                        <SubscribeModal
+                            updateDataAfterSubscribe={updateDataAfterSubscribe}
+                            updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe}
+                            cancelModal={cancelSubscribersModal}
+                            subscribers={user.subscribers}
+                            data={data}/>
+                    )}
+                    {subscriptionsModal && (
+                        <SubscribeModal
+                            updateDataAfterSubscribe={updateDataAfterSubscribe}
+                            updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe}
+                            cancelModal={cancelSubscriptionsModal}
+                            subscriptions={user.subscriptions}
+                            data={data}/>
                     )}
                     <div className={s.user_information}>
                         { previewUrl || user.avaUrl ? (
@@ -176,8 +203,8 @@ export default function ProfilePage({ updateDataAfterRemoveSubscribe, updateData
                                 ) : (
                                     <p className={s.posts_amount}>No Posts</p>
                                 )}
-                                <p className={s.subscribers_amount}>{subscribers} Subscribers</p>
-                                <p className={s.subscriptions_amount}>{subscriptions} Subscriptions</p>
+                                <p onClick={() => {setSubscribersModal(true)}} className={s.subscribers_amount}>{subscribers.length} Subscribers</p>
+                                <p onClick={() => {setSubscriptionsModal(true)}} className={s.subscriptions_amount}>{subscriptions.length} Subscriptions</p>
                             </div>
                         </div>
                     </div>
