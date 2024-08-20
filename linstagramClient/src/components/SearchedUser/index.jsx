@@ -30,7 +30,7 @@ export default function SearchedUser ({ user, onClick, updateDataAfterSubscribe,
             console.log(err);
         })
         updateDataAfterSubscribe(localStorage.getItem('id'), user._id)
-        setIsSigned(true);
+        setIsSigned(user?.subscribers?.includes(localStorage.getItem('id')) || false);
     }
 
     const removeSubscribe = () => {
@@ -50,7 +50,7 @@ export default function SearchedUser ({ user, onClick, updateDataAfterSubscribe,
             console.log(err);
         })
         updateDataAfterRemoveSubscribe(localStorage.getItem('id'), user._id)
-        setIsSigned(false);
+        setIsSigned(user?.subscribers?.includes(localStorage.getItem('id')) || false);
     }
 
     return (
