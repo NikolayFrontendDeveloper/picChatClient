@@ -2,14 +2,14 @@
     "version": 2,
     "builds": [
         {
-            "src": "/package.json",
+            "src": "linstagramClient/package.json",
             "use": "@vercel/static-build"
         }
     ],
     "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "/index.html"
+            "destination": "/linstagramClient/"
         }
     ]
 }
