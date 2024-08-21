@@ -6,16 +6,10 @@
             "use": "@vercel/static-build"
         }
     ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/linstagramClient/index.html"
-        }
-    ],
     "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "/linstagramClient/index.html"
+            "destination": "/linstagramClient/"
         }
     ]
 }
