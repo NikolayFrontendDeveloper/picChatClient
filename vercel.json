@@ -5,11 +5,17 @@
             "src": "linstagramClient/package.json",
             "use": "@vercel/static-build"
         }
-        ],
+    ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "/linstagramClient/"
+            "dest": "/linstagramClient/index.html"
+        }
+    ],
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/linstagramClient/index.html"
         }
     ]
-}
+}  
