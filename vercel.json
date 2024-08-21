@@ -9,13 +9,13 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "/linstagramClient/index.html"
+            "dest": "/linstagramClient/"
         }
     ],
     "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "/linstagramClient/index.html"
+            "destination": "/linstagramClient/"
         }
     ]
 }  
