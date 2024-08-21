@@ -143,9 +143,7 @@ const App = () => {
                 localStorage.setItem("id", data.id);
                 setId(data.id);
                 navigate("/");
-                window.location.reload();
             }
-            console.log(data);
         });    
     };
 
@@ -167,8 +165,6 @@ const App = () => {
             localStorage.setItem("id", data.id);
             setId(data.id);
             navigate("/");
-            window.location.reload();
-            console.log(data);
         });
     };
 
