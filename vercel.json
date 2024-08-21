@@ -9,7 +9,7 @@
     "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "/linstagramClient/"
+            "destination": "/linstagramClient/index.html"
         }
     ]
 }
