@@ -7,9 +7,6 @@
         }
     ],
     "rewrites": [
-        {
-            "source": "/(.*)",
-            "destination": "/linstagramClient/"
-        }
+        { "source": "/profile/:token", "destination": "/" }
     ]
 }
