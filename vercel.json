@@ -7,6 +7,6 @@
         }
     ],
     "rewrites": [
-        { "source": "/profile/:token", "destination": "https://pic-chat-me.vercel.app" }
+        { "source": "/(.*)", "destination": "/" }
     ]
 }
