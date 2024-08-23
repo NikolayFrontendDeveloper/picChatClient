@@ -1,3 +1,5 @@
+@import '../../variables';
+
 .page_wrapper {
     display: flex;
     flex-direction: column;
@@ -33,6 +35,7 @@
                 .user_data_name {
                     font-size: 20px;
                     font-weight: bold;
+                    color: var(--secondary-color);
                 }
 
                 .subscribe_btn {
@@ -61,7 +64,7 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        border-top: 1px solid #000;
+        border-top: 1px solid var(--secondary-color);
         justify-content: center;
 
         .choose_posts_wrapper {
@@ -80,4 +83,8 @@
             flex-wrap: wrap;
         }
     }
+}
+
+button {
+    color: var(--secondary-color);
 }

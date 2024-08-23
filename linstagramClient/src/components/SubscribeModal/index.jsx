@@ -2,7 +2,7 @@ import SearchedUser from '../SearchedUser'
 import ModalWrapper from '../ModalWrapper'
 import s from './styles.module.scss'
 
-export default function SubscribeModal ({ subscribers, subscriptions, cancelModal, data, updateDataAfterSubscribe, updateDataAfterRemoveSubscribe }) {
+export default function SubscribeModal ({ subscribers, subscriptions, cancelModal, data, updateDataAfterSubscribe, updateDataAfterRemoveSubscribe, theme }) {
     return (
         <ModalWrapper cancelModal={cancelModal}>
             {subscribers ? (
@@ -19,7 +19,8 @@ export default function SubscribeModal ({ subscribers, subscriptions, cancelModa
                                 user={user}
                                 cancelModal={cancelModal}
                                 updateDataAfterSubscribe={updateDataAfterSubscribe}
-                                updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe} 
+                                updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe}
+                                theme={theme}
                             />
                         );
                     }
@@ -34,7 +35,8 @@ export default function SubscribeModal ({ subscribers, subscriptions, cancelModa
                                 user={user}
                                 cancelModal={cancelModal}
                                 updateDataAfterSubscribe={updateDataAfterSubscribe}
-                                updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe} 
+                                updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe}
+                                theme={theme}
                             />
                         );
                     }

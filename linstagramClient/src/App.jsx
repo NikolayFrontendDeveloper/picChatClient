@@ -6,12 +6,14 @@ import LoginPage from "./pages/LoginPage";
 import SigninPage from "./pages/SigninPage";
 import AddPage from "./pages/AddPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
-import "./reset.css"
-import "./styles.module.scss"
+import "./reset.css";
+import "./styles.module.scss";
+import './_variables.scss';
 
 const App = () => {
     const navigate = useNavigate();
     const [id, setId] = useState(localStorage.getItem("id") || false);
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light')
     const [posts, setPosts] = useState([]);
     const [user, setUser] = useState(null);
     const [data, setData] = useState([]);
@@ -22,6 +24,15 @@ const App = () => {
         getUserData();
         fetchPosts();
     }, []);
+
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+    }, [theme]);
+
+    const changeTheme = () => {
+        setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+    };    
 
     const getData = () => {
         fetch("https://linstagramserver-1.onrender.com/data")
@@ -328,7 +339,7 @@ const App = () => {
     } else {
         return (
             <Routes>
-                <Route path="/" element={<Layout id={id} logOut={logOut} user={user} data={data}/>}>
+                <Route path="/" element={<Layout id={id} logOut={logOut} user={user} data={data} changeTheme={changeTheme} theme={theme} />}>
                     <Route index element={<MainPage
                         updateDataAfterSubscribe={updateDataAfterSubscribe}
                         updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe}
@@ -338,7 +349,8 @@ const App = () => {
                         updatePostAfterComment={updatePostAfterComment}
                         updatePostComment={updatePostComment}
                         updateLikesInPost={updateLikesInPost}
-                        deletePost={deletePost}/>}
+                        deletePost={deletePost}
+                        theme={theme}/>}
                         />
                     <Route
                     path="login"
@@ -363,7 +375,8 @@ const App = () => {
                         updatePostComment={updatePostComment}
                         updateLikesInPost={updateLikesInPost}
                         updateAva={updateAva}
-                        deletePost={deletePost}/>}
+                        deletePost={deletePost}
+                        theme={theme}/>}
                     />
                 </Route>
             </Routes>

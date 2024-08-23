@@ -58,7 +58,7 @@ export default function AddPage({ uploadPost }) {
             <h1>Add</h1>
             <div>
                 <form onSubmit={handleUpload}>
-                    <input type="file" onChange={handleFileChange} />
+                    <input className={s.file_handler} type="file" onChange={handleFileChange} />
                     {previewUrl && (
                         <div>
                             <p className={s.purple_text}>Selected Image:</p>

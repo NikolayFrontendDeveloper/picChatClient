@@ -1,3 +1,5 @@
+@import "../../variables.scss";
+
 .container {
     position: fixed;
     top: 0;
@@ -20,7 +22,7 @@
 
     .modal_body {
         z-index: 3;
-        background-color: white;
+        background-color: var(--primary-color);
         display: flex;
         flex-direction: column;
         width: fit-content;

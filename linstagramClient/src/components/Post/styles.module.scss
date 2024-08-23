@@ -1,7 +1,9 @@
+@import '../../variables';
+
 .post_container {
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--secondary-color);
     padding: 1em 0;
     gap: 0.5em;
 
@@ -19,6 +21,7 @@
     .user_name {
         font-size: 18px;
         font-weight: bold;
+        color: var(--secondary-color);
     }
 
     .post_wrapper {
@@ -48,5 +51,6 @@
 
     p {
         font-size: 15px;
+        color: var(--secondary-color);
     }
 }

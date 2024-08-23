@@ -2,7 +2,7 @@ import s from './styles.module.scss'
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-export default function SearchedUser ({ user, onClick, updateDataAfterSubscribe, updateDataAfterRemoveSubscribe, cancelModal }) {
+export default function SearchedUser ({ user, onClick, updateDataAfterSubscribe, updateDataAfterRemoveSubscribe, cancelModal, theme }) {
     const navigate = useNavigate();
     const [isSigned, setIsSigned] = useState(user?.subscribers?.includes(localStorage.getItem('id')) || false);
 
@@ -64,7 +64,7 @@ export default function SearchedUser ({ user, onClick, updateDataAfterSubscribe,
                 {user && user.avaUrl ? (
                     <img onClick={navigateToProfile} className={s.user_ava} src={user.avaUrl} alt="ava icon" />
                 ) : (
-                    <img onClick={navigateToProfile} className={s.user_ava} src="/ava-icon.svg" alt="ava icon" />
+                    <img onClick={navigateToProfile} className={s.user_ava} src={`/${theme}/ava-icon.svg`} alt="ava icon" />
                 )}
                 <p onClick={navigateToProfile} className={s.user_name}>{user.username}</p>
             </div>

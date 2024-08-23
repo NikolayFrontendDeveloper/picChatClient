@@ -1,8 +1,11 @@
+@import '../../variables';
+
 #ava_modal_description {
     padding: 30px;
     border: 0;
     cursor: default;
     font-size: 25px;
+    color: var(--secondary-color);
 }
 
 .remove_ava_btn {

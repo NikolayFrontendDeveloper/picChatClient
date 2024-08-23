@@ -4,7 +4,7 @@ import SearchedUser from '../components/SearchedUser';
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function MainPage({ deletePost, user, posts, data, updateDataAfterSubscribe, updateDataAfterRemoveSubscribe, updatePostAfterComment, updatePostComment, updateLikesInPost }) {
+export default function MainPage({ theme, deletePost, user, posts, data, updateDataAfterSubscribe, updateDataAfterRemoveSubscribe, updatePostAfterComment, updatePostComment, updateLikesInPost }) {
     const [users, setUsers] = useState([]);
     const [visiblePosts, setVisiblePosts] = useState([]);
     const [page, setPage] = useState(1);
@@ -61,7 +61,8 @@ export default function MainPage({ deletePost, user, posts, data, updateDataAfte
                             updatePostAfterComment={updatePostAfterComment}
                             updatePostComment={updatePostComment}
                             updateLikesInPost={updateLikesInPost}
-                            deletePost={deletePost} />
+                            deletePost={deletePost}
+                            theme={theme} />
                     ))
                 ) : (
                     <p>No available posts</p>
@@ -75,7 +76,8 @@ export default function MainPage({ deletePost, user, posts, data, updateDataAfte
                             updateDataAfterSubscribe={updateDataAfterSubscribe}
                             updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe}
                             user={user}
-                            key={index}/>
+                            key={index}
+                            theme={theme}/>
                     ))
                 ) : (
                     <p>No recommendations</p>

@@ -6,7 +6,7 @@ import AvaModal from "../../components/AvaModal";
 import axios from 'axios';
 import SubscribeModal from "../../components/SubscribeModal";
 
-export default function ProfilePage({ updateDataAfterRemoveSubscribe, updateDataAfterSubscribe, deletePost, data, updatePostAfterComment, updatePostComment, updateLikesInPost, updateAva }) {
+export default function ProfilePage({ theme, updateDataAfterRemoveSubscribe, updateDataAfterSubscribe, deletePost, data, updatePostAfterComment, updatePostComment, updateLikesInPost, updateAva }) {
     const [modal, setModal] = useState(false);
     const [previewUrl, setPreviewUrl] = useState('');
     const { token } = useParams();
@@ -161,7 +161,8 @@ export default function ProfilePage({ updateDataAfterRemoveSubscribe, updateData
                             updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe}
                             cancelModal={cancelSubscribersModal}
                             subscribers={user.subscribers}
-                            data={data}/>
+                            data={data}
+                            theme={theme}/>
                     )}
                     {subscriptionsModal && (
                         <SubscribeModal
@@ -169,7 +170,8 @@ export default function ProfilePage({ updateDataAfterRemoveSubscribe, updateData
                             updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe}
                             cancelModal={cancelSubscriptionsModal}
                             subscriptions={user.subscriptions}
-                            data={data}/>
+                            data={data}
+                            theme={theme}/>
                     )}
                     <div className={s.user_information}>
                         { previewUrl || user.avaUrl ? (

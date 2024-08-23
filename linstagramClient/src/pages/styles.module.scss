@@ -1,3 +1,5 @@
+@import '../variables';
+
 $primary: #c80043;
 $secondary: #d80fdc;
 $white: #fff;
@@ -10,18 +12,20 @@ $gray: #9b9b9b;
     width: fit-content;
     margin-left: 40%;
     padding-top: 1em;
+    background-color: var(--primary-color);
 
     .recommendations_container {
-        .recommendations_title {
-            font-size: 20px;
-            opacity: 0.8;
-            padding-bottom: 10px;
-        }
-
         display: flex;
         flex-direction: column;
         gap: 0.5em;
         padding: 2em;
+
+        .recommendations_title {
+            font-size: 20px;
+            opacity: 0.5;
+            padding-bottom: 10px;
+            color: var(--secondary-color);
+        }
     }
 
     .posts_container {
@@ -43,7 +47,7 @@ $gray: #9b9b9b;
         position: relative;
         cursor: pointer;
     
-        background: linear-gradient(to right, $primary, $secondary);
+        background: linear-gradient(to right, var(--logo-primary-color), var(--logo-secondary-color));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     
@@ -56,7 +60,7 @@ $gray: #9b9b9b;
             bottom: 0;
             border-radius: 10px;
             border: 2px solid transparent;
-            background: linear-gradient(#fff, #fff) padding-box, linear-gradient(to right, $primary, $secondary) border-box;
+            background: linear-gradient(#fff, #fff) padding-box, linear-gradient(to right, var(--logo-primary-color), var(--logo-secondary-color)) border-box;
             z-index: -1;
         }
     }
@@ -66,6 +70,10 @@ form {
     display: flex;
     flex-direction: column;
     gap: 1em;
+
+    .file_handler {
+        color: var(--secondary-color);
+    }
 }
 
 .form__group {
@@ -78,7 +86,7 @@ form {
         font-family: inherit;
         width: 100%;
         border: 0;
-        border-bottom: 2px solid $gray;
+        border-bottom: 2px solid var(--secondary-color);
         outline: 0;
         font-size: 1.3rem;
         color: $black;
@@ -131,4 +139,8 @@ form {
 
 img { 
     width: 500px;
+}
+
+h1, p {
+    color: var(--secondary-color);
 }
