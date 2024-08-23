@@ -90,6 +90,7 @@ export default function Post({ data, user, post, deletePost, updatePostAfterComm
                         updatePostAfterComment={updatePostAfterComment}
                         updatePostComment={updatePostComment}
                         deletePost={deletePost}
+                        theme={theme}
                     />
                 )}
                 <img

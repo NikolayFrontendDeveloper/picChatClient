@@ -2,7 +2,7 @@ import s from "./styles.module.scss";
 import { useState, useEffect } from "react";
 import CommentModal from "../CommentModal";
 
-export default function UserPost({ deletePost, data, post, user, updatePostAfterComment, updatePostComment, updateLikesInPost }) {
+export default function UserPost({ deletePost, data, post, user, updatePostAfterComment, updatePostComment, updateLikesInPost, theme }) {
     const date = new Date();
     const range = date - post.time;
     const [likes, setLikes] = useState(post.likes || []);
@@ -21,17 +21,17 @@ export default function UserPost({ deletePost, data, post, user, updatePostAfter
                     setPostAva(userData.avaUrl);
                 } else {
                     // Если не удалось загрузить, ставим дефолтное значение
-                    setPostAva('/ava-icon.svg');
+                    setPostAva(`/${theme}/ava-icon.svg`);
                     console.log("Если не удалось загрузить, ставим дефолтное значение")
                 }
             } else {
                 // Если данных нет или нет URL, ставим дефолтное значение
-                setPostAva('/ava-icon.svg');
+                setPostAva(`/${theme}/ava-icon.svg`);
                 // console.log("Если данных нет или нет URL, ставим дефолтное значение")
             }
         } catch (error) {
             console.error("Ошибка при загрузке аватарки:", error);
-            setPostAva('/ava-icon.svg'); // В случае ошибки также устанавливаем дефолтное значение
+            setPostAva(`/${theme}/ava-icon.svg`); // В случае ошибки также устанавливаем дефолтное значение
         }
     };
 
@@ -139,6 +139,7 @@ export default function UserPost({ deletePost, data, post, user, updatePostAfter
                     updatePostAfterComment={updatePostAfterComment}
                     updatePostComment={updatePostComment}
                     updateLikesInPost={updateLikesInPost}
+                    theme={theme}
                 />
             )}
             <img onClick={openModal} src={post.imageUrl} alt="user image" />

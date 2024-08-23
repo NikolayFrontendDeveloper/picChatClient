@@ -227,6 +227,7 @@ export default function ProfilePage({ theme, updateDataAfterRemoveSubscribe, upd
                                         updatePostAfterComment={updatePostAfterComment}
                                         updatePostComment={updatePostComment}
                                         updateLikesInPost={updateLikesInPost}
+                                        theme={theme}
                                     />
                                 ))
                             ) : (

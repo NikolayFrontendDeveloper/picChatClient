@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import RemovingCommentModal from '../RemovingCommentModal'
 import { useNavigate } from 'react-router-dom';
 
-export default function Comment({ data, addLikeOnComment, removeLikeOnComment, comment, removeComment }) {
+export default function Comment({ data, addLikeOnComment, removeLikeOnComment, comment, removeComment, theme }) {
     const [isLikedComment, setIsLikedComment] = useState(false);
     const [isCommentModal, setIsCommentModal] = useState(false);
     const [userAva, setUserAva] = useState('');
@@ -40,7 +40,7 @@ export default function Comment({ data, addLikeOnComment, removeLikeOnComment, c
                     {userAva ? (
                         <img onClick={() => {navigate(`/profile/${comment.token}`)}} className={s.user_icon} src={userAva} alt="ava icon" />
                     ) : (
-                        <img onClick={() => {navigate(`/profile/${comment.token}`)}} className={s.user_icon} src="/ava-icon.svg" alt="ava icon" />
+                        <img onClick={() => {navigate(`/profile/${comment.token}`)}} className={s.user_icon} src={`/${theme}/ava-icon.svg`} alt="ava icon" />
                     )}
                     <p><span onClick={() => {navigate(`/profile/${comment.token}`)}} className={s.username}>{comment.username} </span>{comment.text}</p>
                 </div>
@@ -54,7 +54,7 @@ export default function Comment({ data, addLikeOnComment, removeLikeOnComment, c
                 ) : (
                     <img
                         className={s.comments_notliked_icon}
-                        src="/notliked-icon.svg"
+                        src={`/${theme}/notliked-icon.svg`}
                         alt="not liked icon"
                         onClick={() => addLikeOnComment(comment.id)}
                     />
@@ -62,7 +62,7 @@ export default function Comment({ data, addLikeOnComment, removeLikeOnComment, c
             </div>
             <div className={s.comment_underline}>
                 <p>Liked: {comment.likes ? comment.likes.length : 0}</p>
-                <img onClick={openModal} className={s.additionally_func} src="/additionally-function.svg" alt="additionally function of comment" />
+                <img onClick={openModal} className={s.additionally_func} src={`/${theme}/additionally-function.svg`} alt="additionally function of comment" />
                 {isCommentModal && (
                     <RemovingCommentModal
                         id={comment.id}

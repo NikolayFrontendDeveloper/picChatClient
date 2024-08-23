@@ -4,7 +4,7 @@ import Comment from '../Comment';
 import PostFuncModal from '../PostFuncModal'
 import { useNavigate } from 'react-router-dom';
 
-export default function CommentModal({ deletePost, postAva, data, user, cancelModal, post, isLiked, addLike, removeLike, likes, updatePostAfterComment, updatePostComment, updateLikesInPost }) {
+export default function CommentModal({ theme, deletePost, postAva, data, user, cancelModal, post, isLiked, addLike, removeLike, likes, updatePostAfterComment, updatePostComment, updateLikesInPost }) {
     const [inputText, setInputText] = useState('');
     const [comments, setComments] = useState(post.comments || []);
     const [isModal, setIsModal] = useState(false);
@@ -181,7 +181,7 @@ export default function CommentModal({ deletePost, postAva, data, user, cancelMo
                             )}
                             <p className={s.username}>{post.name || user.username}</p>
                         </div>
-                        <img onClick={() => {setIsModal(true)}} className={s.post_menu_btn} src="/additionally-function.svg" alt="menu dots" />
+                        <img onClick={() => {setIsModal(true)}} className={s.post_menu_btn} src={`/${theme}/additionally-function.svg`} alt="menu dots" />
                     </div>
                     <div className={s.comments_box}>
                         {post.text && (
@@ -205,6 +205,7 @@ export default function CommentModal({ deletePost, postAva, data, user, cancelMo
                                     removeLikeOnComment={removeLikeOnComment}
                                     updatePostAfterComment={updatePostAfterComment}
                                     removeComment={removeComment}
+                                    theme={theme}
                                 />
                             ))
                         ) : (
@@ -214,11 +215,11 @@ export default function CommentModal({ deletePost, postAva, data, user, cancelMo
                     <div className={s.image_functions_box}>
                         <div className={s.like_comment_wrapper}>
                             {!isLiked ? (
-                                <img onClick={addLike} src="/notliked-icon.svg" alt="not liked icon" />
+                                <img onClick={addLike} src={`/${theme}/notliked-icon.svg`} alt="not liked icon" />
                             ) : (
                                 <img onClick={removeLike} className={s.liked_icon} src="/liked-icon.svg" alt="liked icon" />
                             )}
-                            <img src="/comment-icon.svg" alt="comment icon" />
+                            <img src={`/${theme}/comment-icon.svg`} alt="comment icon" />
                         </div>
                     </div>
                     <p className={s.likes_amount}>{likes.length} likes</p>
