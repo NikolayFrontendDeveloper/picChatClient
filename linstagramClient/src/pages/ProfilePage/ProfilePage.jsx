@@ -177,7 +177,7 @@ export default function ProfilePage({ theme, updateDataAfterRemoveSubscribe, upd
                         { previewUrl || user.avaUrl ? (
                             <img onClick={() => {setModal(true)}} className={s.profile_img} src={previewUrl || user.avaUrl} alt="ava icon" />
                         ) : (
-                            <img onClick={() => {setModal(true)}} className={s.profile_img} src="/ava-icon.svg" alt="ava icon" />
+                            <img onClick={() => {setModal(true)}} className={s.profile_img} src={`/${theme}/ava-icon.svg`} alt="ava icon" />
                         )}
                         <div className={s.user_data_wrapper}>
                             <div className={s.user_data_line}>
@@ -195,7 +195,7 @@ export default function ProfilePage({ theme, updateDataAfterRemoveSubscribe, upd
                                         ) : (
                                             <button onClick={subscribe} className={s.subscribe_btn}>Subscribe</button>
                                         )}
-                                        <img src="/additionally-function.svg" alt="additionally function" />
+                                        <img src={`/${theme}/additionally-function.svg`} alt="additionally function" />
                                     </>
                                 )}
                             </div>
