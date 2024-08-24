@@ -46,7 +46,7 @@ p {
     .aside_box {
         display: flex;
         flex-direction: column;
-        gap: 1em;
+        gap: 1.7em;
         width: fit-content;
         padding: 20px;
 
@@ -56,8 +56,12 @@ p {
             justify-content: center;
             gap: 3em;
             width: 100vw;
+        }
 
-            .aside_left_box_title {
+        .aside_left_box_title {
+            font-size: 20px;
+
+            @media screen and (max-width: 768px) {
                 display: none;
             }
         }
