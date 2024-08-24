@@ -2,5 +2,9 @@
     width: 33.3%;
     img {
         width: 99%;
+
+        @media screen and (max-width: 768px) {
+            width: 95%;
+        }
     }
 }

@@ -26,7 +26,7 @@ export default function ProfilePage({ theme, changeTheme, logOut, updateDataAfte
         setSubscribers(user.subscribers || []);
         setIsSigned(currentUser?.subscriptions?.includes(token) || false);
         setCurrentUser(data.find(user => user._id === localStorage.getItem('id')) || null);
-    }, [token, data])
+    }, [token, data, currentUser])
 
     const cancelMenuModal = () => {
         setMenuModal(false);
@@ -210,11 +210,9 @@ export default function ProfilePage({ theme, changeTheme, logOut, updateDataAfte
                                     </>
                                 ) : (
                                     <>
-                                        {isSigned ? (
-                                            <button onClick={removeSubscribe} className={s.signed_btn}>Signed</button>
-                                        ) : (
-                                            <button onClick={subscribe} className={s.subscribe_btn}>Subscribe</button>
-                                        )}
+                                        <button onClick={isSigned ? removeSubscribe : subscribe} className={isSigned ? s.signed_btn : s.subscribe_btn}>
+                                            {isSigned ? 'Signed' : 'Subscribe'}
+                                        </button>
                                         <img src={`/${theme}/additionally-function.svg`} alt="additionally function" />
                                     </>
                                 )}
