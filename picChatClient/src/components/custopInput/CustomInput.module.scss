@@ -1,3 +1,5 @@
+@import '../../variables';
+
 $primary: #c80043;
 $secondary: #d80fdc;
 $white: #fff;
@@ -23,10 +25,11 @@ $gray: #9b9b9b;
   border-bottom: 2px solid $gray;
   outline: 0;
   font-size: 1.3rem;
-  color: $black;
+  color: var(--secondary-color);
   padding: 7px 0;
-  background: transparent;
+  background: var(--primary-color);
   transition: border-color 0.2s;
+  border-radius: 5px;
 
   &::placeholder {
       color: transparent;

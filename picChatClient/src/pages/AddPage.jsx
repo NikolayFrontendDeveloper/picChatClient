@@ -55,12 +55,11 @@ export default function AddPage({ uploadPost }) {
 
     return (
         <div className={s.container}>
-            <h1>Add</h1>
-            <div>
+            <div className={s.add_page_container}>
                 <form onSubmit={handleUpload}>
                     <input className={s.file_handler} type="file" onChange={handleFileChange} />
                     {previewUrl && (
-                        <div>
+                        <div className={s.selected_file_container}>
                             <p className={s.purple_text}>Selected Image:</p>
                             <img src={previewUrl} alt="Selected file" style={{ maxWidth: '100%' }} />
                         </div>

@@ -73,15 +73,15 @@ export default function Layout({ id, logOut, user, data, changeTheme, theme }) {
                                     </NavLink>
                                     <NavLink to={"/"}>
                                         <img className={s.aside_icons} src={`/${theme}/home-icon.svg`} alt="home-icon" />
-                                        <p>Main</p>
+                                        <p className={s.aside_left_box_title}>Main</p>
                                     </NavLink>
                                     <NavLink onClick={changeSearchingModal}>
                                         <img className={s.aside_icons} src={`/${theme}/searching-icon.svg`} alt="search-icon" />
-                                        <p>Search</p>
+                                        <p className={s.aside_left_box_title}>Search</p>
                                     </NavLink>
                                     <NavLink to={"/add"}>
                                         <img className={s.aside_icons} src={`/${theme}/add-icon.svg`} alt="add-icon" />
-                                        <p>Add</p>
+                                        <p className={s.aside_left_box_title}>Add</p>
                                     </NavLink>
                                     <NavLink to={`/profile/${localStorage.getItem('id')}`}>
                                         {user && user.avaUrl ? (
@@ -89,17 +89,17 @@ export default function Layout({ id, logOut, user, data, changeTheme, theme }) {
                                         ) : (
                                             <img className={s.user_ava} src={`/${theme}/ava-icon.svg`} alt="default-avatar" />
                                         )}
-                                        <p>Profile</p>
+                                        <p className={s.aside_left_box_title}>Profile</p>
                                     </NavLink>
                                 </div>
                                 <div className={s.aside_box_lower}>
                                     <button onClick={() => setMenuModal(true)} className={s.menu_btn}>
                                         <img className={s.aside_icons} src={`/${theme}/menu-icon.svg`} alt="menu-icon" />
-                                        More
+                                        <p>More</p>
                                     </button>
                                     <button className={s.logout_btn} onClick={logOutFunc}>
                                         <img className={s.aside_icons} src="/logout-icon.svg" alt="logout-icon" />
-                                        Log out
+                                        <p>Log out</p>
                                     </button>
                                 </div>
                             </>

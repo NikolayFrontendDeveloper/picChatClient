@@ -376,7 +376,9 @@ const App = () => {
                         updateLikesInPost={updateLikesInPost}
                         updateAva={updateAva}
                         deletePost={deletePost}
-                        theme={theme}/>}
+                        theme={theme}
+                        changeTheme={changeTheme}
+                        logOut={logOut}/>}
                     />
                 </Route>
             </Routes>

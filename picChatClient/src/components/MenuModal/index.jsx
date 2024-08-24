@@ -2,7 +2,7 @@ import s from "./styles.module.scss";
 import "./switcher.scss";
 import ModalWrapper from "../ModalWrapper";
 
-export default function MenuModal({ changeTheme, cancelMenuModal, theme }) {
+export default function MenuModal({ changeTheme, cancelMenuModal, theme, logOut }) {
     return (
         <ModalWrapper cancelModal={cancelMenuModal}>
             <p>More:</p>
@@ -22,6 +22,14 @@ export default function MenuModal({ changeTheme, cancelMenuModal, theme }) {
                     </span>
                 </label>
             </div>
+            {
+                logOut && (
+                    <button className={s.logout_btn} onClick={logOut}>
+                        <img className={s.aside_icons} src="/logout-icon.svg" alt="logout-icon" />
+                        <p className={s.logout_title}>Log out</p>
+                    </button>
+                )
+            }
         </ModalWrapper>
     );
 }

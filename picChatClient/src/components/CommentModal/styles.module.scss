@@ -30,6 +30,10 @@
         .post_image {
             width: 60%;
             object-fit: cover;
+
+            @media screen and (max-width: 768px) {
+                display: none;
+            }
         }
 
         .comments_wrapper {

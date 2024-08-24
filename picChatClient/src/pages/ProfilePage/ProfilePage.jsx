@@ -5,8 +5,9 @@ import UserPost from '../../components/UserPost/index';
 import AvaModal from "../../components/AvaModal";
 import axios from 'axios';
 import SubscribeModal from "../../components/SubscribeModal";
+import MenuModal from "../../components/MenuModal";
 
-export default function ProfilePage({ theme, updateDataAfterRemoveSubscribe, updateDataAfterSubscribe, deletePost, data, updatePostAfterComment, updatePostComment, updateLikesInPost, updateAva }) {
+export default function ProfilePage({ theme, changeTheme, logOut, updateDataAfterRemoveSubscribe, updateDataAfterSubscribe, deletePost, data, updatePostAfterComment, updatePostComment, updateLikesInPost, updateAva }) {
     const [modal, setModal] = useState(false);
     const [previewUrl, setPreviewUrl] = useState('');
     const { token } = useParams();
@@ -17,6 +18,7 @@ export default function ProfilePage({ theme, updateDataAfterRemoveSubscribe, upd
     const [subscriptions, setSubscriptions] = useState(user.subscriptions || []);
     const [subscribersModal, setSubscribersModal] = useState(false);
     const [subscriptionsModal, setSubscriptionsModal] = useState(false);
+    const [menuModal, setMenuModal] = useState(false);
 
     useEffect(() => {
         setUser(data.find(user => user._id === token) || null);
@@ -25,6 +27,10 @@ export default function ProfilePage({ theme, updateDataAfterRemoveSubscribe, upd
         setIsSigned(currentUser?.subscriptions?.includes(token) || false);
         setCurrentUser(data.find(user => user._id === localStorage.getItem('id')) || null);
     }, [token, data])
+
+    const cancelMenuModal = () => {
+        setMenuModal(false);
+    }
 
     const handleFileChange = async (e) => {
         const selectedFile = e.target.files[0];
@@ -148,6 +154,14 @@ export default function ProfilePage({ theme, updateDataAfterRemoveSubscribe, upd
         <>
             {user && (
                 <div className={s.page_wrapper}>
+                    {menuModal && (
+                            <MenuModal
+                                changeTheme={changeTheme}
+                                cancelMenuModal={cancelMenuModal}
+                                theme={theme}
+                                logOut={logOut}
+                            />
+                        )}
                     {modal && (
                         <AvaModal 
                             cancelModal={cancelModal}
@@ -173,6 +187,12 @@ export default function ProfilePage({ theme, updateDataAfterRemoveSubscribe, upd
                             data={data}
                             theme={theme}/>
                     )}
+                    <div className={s.upper_user_data}>
+                        <p className={s.upper_user_data_name}>{user.username}</p>
+                        <button onClick={() => {setMenuModal(true)}} className={s.menu_btn}>
+                            <img className={s.aside_icons} src={`/${theme}/menu-icon.svg`} alt="menu-icon" />
+                        </button>
+                    </div>
                     <div className={s.user_information}>
                         { previewUrl || user.avaUrl ? (
                             <img onClick={() => {setModal(true)}} className={s.profile_img} src={previewUrl || user.avaUrl} alt="ava icon" />
@@ -180,7 +200,7 @@ export default function ProfilePage({ theme, updateDataAfterRemoveSubscribe, upd
                             <img onClick={() => {setModal(true)}} className={s.profile_img} src={`/${theme}/ava-icon.svg`} alt="ava icon" />
                         )}
                         <div className={s.user_data_wrapper}>
-                            <div className={s.user_data_line}>
+                            <div className={s.user_data_upper_line}>
                                 <p className={s.user_data_name}>{user.username}</p>
                                 {user._id === localStorage.getItem('id') ? (
                                     <>
@@ -199,7 +219,7 @@ export default function ProfilePage({ theme, updateDataAfterRemoveSubscribe, upd
                                     </>
                                 )}
                             </div>
-                            <div className={s.user_data_line}>
+                            <div className={s.user_data_under_line}>
                                 {user && user.posts && user.posts.length > 0 ? (
                                     <p className={s.posts_amount}>{user.posts.length} Posts</p>
                                 ) : (
