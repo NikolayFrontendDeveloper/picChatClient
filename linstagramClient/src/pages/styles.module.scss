@@ -14,11 +14,20 @@ $gray: #9b9b9b;
     padding-top: 1em;
     background-color: var(--primary-color);
 
+    @media screen and (max-width: 768px) {
+        margin: 0;
+        justify-content: center;
+    }
+
     .recommendations_container {
         display: flex;
         flex-direction: column;
         gap: 0.5em;
         padding: 2em;
+
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
 
         .recommendations_title {
             font-size: 20px;
@@ -32,6 +41,10 @@ $gray: #9b9b9b;
         display: flex;
         flex-direction: column;
         width: fit-content;
+
+        @media screen and (max-width: 768px) {
+            align-items: center;
+        }
     }
 
     .purple_text {
@@ -139,8 +152,17 @@ form {
 
 img { 
     width: 500px;
+
+    @media screen and (max-width: 768px) {
+        width: 50%;
+    }
 }
 
 h1, p {
     color: var(--secondary-color);
+    font-size: 10px;
+
+    @media screen and (max-width: 768px) {
+        font-size: 8px;
+    }
 }

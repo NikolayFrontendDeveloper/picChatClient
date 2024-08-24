@@ -6,8 +6,10 @@
     border-bottom: 1px solid var(--secondary-color);
     padding: 1em 0;
     gap: 0.5em;
+    width: 70%;
 
     .user_container {
+        width: fit-content;
         display: flex;
         gap: 5px;
         align-items: center;
@@ -22,6 +24,10 @@
         font-size: 18px;
         font-weight: bold;
         color: var(--secondary-color);
+
+        @media screen and (max-width: 768px) {
+            font-size: 12px;
+        }
     }
 
     .post_wrapper {
@@ -31,6 +37,10 @@
 
         .post_img {
             width: 500px;
+
+            @media screen and (max-width: 768px) {
+                width: 100%;
+            }
         }
     
         .image_functions_box {
