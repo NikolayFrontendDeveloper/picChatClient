@@ -1,14 +1,16 @@
 import s from "./styles.module.scss";
 import { useState, useEffect } from "react";
 import CommentModal from "../CommentModal";
+import { useNavigate } from "react-router-dom";
 
-export default function UserPost({ deletePost, data, post, user, updatePostAfterComment, updatePostComment, updateLikesInPost, theme }) {
+export default function UserPost({ deletePost, data, post, user, updatePostAfterComment, updatePostComment, updateLikesInPost, theme, token, id }) {
     const date = new Date();
     const range = date - post.time;
     const [likes, setLikes] = useState(post.likes || []);
     const [isLiked, setIsLiked] = useState(likes.includes(localStorage.getItem("id")));
     const [isCommentModal, setIsCommentModal] = useState(false);
     const [postAva, setPostAva] = useState('');
+    const navigate = useNavigate();
 
     const getPostAva = async () => {
         try {
@@ -122,6 +124,10 @@ export default function UserPost({ deletePost, data, post, user, updatePostAfter
         setIsCommentModal(true);
     };
 
+    const fetchUserPosts = () => {
+        navigate(`/user-posts/${token}/${id}`);
+    }
+
     return (
         <div className={s.container}>
             {isCommentModal && (
@@ -142,7 +148,7 @@ export default function UserPost({ deletePost, data, post, user, updatePostAfter
                     theme={theme}
                 />
             )}
-            <img onClick={openModal} src={post.imageUrl} alt="user image" />
+            <img onClick={window.innerWidth < 768 ? fetchUserPosts : openModal} src={post.imageUrl} alt="user image" />
         </div>
     );
 }

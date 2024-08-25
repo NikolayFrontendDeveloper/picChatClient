@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import SigninPage from "./pages/SigninPage";
 import AddPage from "./pages/AddPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import UserPostsPage from "./pages/UserPostsPage";
 import "./reset.css";
 import "./styles.module.scss";
 import './_variables.scss';
@@ -367,6 +368,23 @@ const App = () => {
                     <Route
                     path="profile/:token"
                     element={<ProfilePage 
+                        updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe}
+                        updateDataAfterSubscribe={updateDataAfterSubscribe}
+                        data={data}
+                        user={user}
+                        updatePostAfterComment={updatePostAfterComment}
+                        updatePostComment={updatePostComment}
+                        updateLikesInPost={updateLikesInPost}
+                        updateAva={updateAva}
+                        deletePost={deletePost}
+                        theme={theme}
+                        changeTheme={changeTheme}
+                        logOut={logOut}/>}
+                    />
+                    <Route
+                    path="/user-posts/:token/:id"
+                    element={<UserPostsPage 
+                        posts={posts}
                         updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe}
                         updateDataAfterSubscribe={updateDataAfterSubscribe}
                         data={data}

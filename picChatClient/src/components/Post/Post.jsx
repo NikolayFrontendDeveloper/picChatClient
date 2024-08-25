@@ -1,5 +1,5 @@
 import s from "./styles.module.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import CommentModal from "../CommentModal";
 

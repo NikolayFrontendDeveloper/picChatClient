@@ -238,6 +238,7 @@ export default function ProfilePage({ theme, changeTheme, logOut, updateDataAfte
                                 user.posts.sort((a, b) => b.time - a.time).map((post, index) => (
                                     <UserPost
                                         key={index}
+                                        id={index}
                                         deletePost={deletePost}
                                         data={data}
                                         post={post}
@@ -246,6 +247,7 @@ export default function ProfilePage({ theme, changeTheme, logOut, updateDataAfte
                                         updatePostComment={updatePostComment}
                                         updateLikesInPost={updateLikesInPost}
                                         theme={theme}
+                                        token={token}
                                     />
                                 ))
                             ) : (
