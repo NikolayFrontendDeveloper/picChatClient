@@ -49,8 +49,6 @@ const App = () => {
         };
 
         fetchFavoritePosts();
-
-        console.log(user)
     }, [allPosts, user]);
 
     const changeTheme = () => {
