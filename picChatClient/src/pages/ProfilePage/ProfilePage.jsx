@@ -75,6 +75,8 @@ export default function ProfilePage({ favorite, activeTab, setActiveTab, theme, 
     };
 
     const uploadAva = (payload) => {
+        removeAvaFromCloudinary();
+
         fetch("https://linstagramserver-1.onrender.com/add-ava", {
             method: "POST",
             body: JSON.stringify(payload),
@@ -127,6 +129,8 @@ export default function ProfilePage({ favorite, activeTab, setActiveTab, theme, 
     }
 
     const removeAva = () => {
+        removeAvaFromCloudinary();
+
         const payload = {
             token: localStorage.getItem('id')
         }
@@ -153,6 +157,31 @@ export default function ProfilePage({ favorite, activeTab, setActiveTab, theme, 
 
     const cancelSubscriptionsModal = () => {
         setSubscriptionsModal(false);
+    }
+
+    const removeAvaFromCloudinary = () => {
+        function extractPublicId(url) {
+            const parts = url.split('/');
+            const publicIdWithExtension = parts[parts.length - 1];
+            const publicId = publicIdWithExtension.split('.')[0];
+            return publicId;
+        }
+
+        fetch("https://linstagramserver-1.onrender.com/delete-image", {
+            method: "POST",
+            body: JSON.stringify({
+                "publicId": extractPublicId(userByToken.avaUrl),
+                "typeFile": "image"
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                window.location.reload();
+            });
     }
 
     return (
