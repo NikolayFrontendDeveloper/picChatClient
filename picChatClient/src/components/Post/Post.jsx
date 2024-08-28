@@ -1,14 +1,23 @@
 import s from "./styles.module.scss";
-import { useState, useEffect, forwardRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import CommentModal from "../CommentModal";
 
-export default function Post({ data, user, post, deletePost, updatePostAfterComment, updatePostComment, updateLikesInPost, theme }) {
+export default function Post({ data, user, post, deletePost, updatePostAfterComment, updatePostComment, updateLikesInPost, theme, getUserData }) {
     const [likes, setLikes] = useState(post.likes || []);
     const [isLiked, setIsLiked] = useState(likes.includes(localStorage.getItem("id")));
     const [isCommentModal, setIsCommentModal] = useState(false);
     const [postAva, setPostAva] = useState('');
+    const [isFavorite, setIsFavorite] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        user.favoritePosts?.forEach(fav => {
+            if (fav.postToken === post.token && fav.imageUrl === post.imageUrl) {
+                setIsFavorite(true);
+            }
+        })
+    }, [user])
 
     useEffect(() => {
         const fetchAvatar = async () => {
@@ -65,6 +74,21 @@ export default function Post({ data, user, post, deletePost, updatePostAfterComm
         }
     };
 
+    const handleFavorite = async (action) => {
+        const payload = { postToken: post.token, token: localStorage.getItem("id"), imageUrl: post.imageUrl };
+        try {
+            await fetch(`https://linstagramserver-1.onrender.com/${action}`, {
+                method: "POST",
+                body: JSON.stringify(payload),
+                headers: { "Content-Type": "application/json" },
+            });
+            setIsFavorite(action === 'add-favorite');
+            getUserData();
+        } catch (error) {
+            console.error(`Error ${action} like:`, error);
+        }
+    };
+
     return (
         <div className={s.post_container}>
             <div onClick={() => navigate(`/profile/${post.token}`)} className={s.user_container}>
@@ -90,6 +114,8 @@ export default function Post({ data, user, post, deletePost, updatePostAfterComm
                         updatePostAfterComment={updatePostAfterComment}
                         updatePostComment={updatePostComment}
                         deletePost={deletePost}
+                        isFavorite={isFavorite}
+                        handleFavorite={handleFavorite}
                         theme={theme}
                     />
                 )}
@@ -112,6 +138,11 @@ export default function Post({ data, user, post, deletePost, updatePostAfterComm
                             alt="comment icon"
                         />
                     </div>
+                    <img
+                        onClick={() => handleFavorite(isFavorite ? 'delete-favorite' : 'add-favorite')}
+                        src={isFavorite ? `/${theme}/favorite-icon.svg` : `/${theme}/not-favorite-icon.svg`}
+                        alt="comment icon"
+                    />
                 </div>
                 <p>{likes.length} likes</p>
             </div>

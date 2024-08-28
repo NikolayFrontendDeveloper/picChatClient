@@ -19,11 +19,13 @@ const App = () => {
     const [user, setUser] = useState(null);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [allPosts, setAllPosts] = useState([]);
 
     useEffect(() => {
         getData();
         getUserData();
         fetchPosts();
+        getAllPosts();
     }, []);
 
     useEffect(() => {
@@ -48,6 +50,17 @@ const App = () => {
                 setLoading(false);
             });
     }
+
+    const getAllPosts = async () => {
+        try {
+            const res = await fetch("https://linstagramserver-1.onrender.com/posts");
+            const data = await res.json();
+            setAllPosts(data);
+            setLoading(false);
+        } catch (e) {
+            setLoading(false);
+        }
+    };
 
     const updateDataAfterSubscribe = (token, targetToken) => {
         const updatedData = data.map(user => {
@@ -109,6 +122,22 @@ const App = () => {
             setUser(data);
         })
         .catch();
+    };
+
+    const updateUserAfterFavorite = (newFavorite) => {
+        setUser(prevUser => ({
+            ...prevUser,
+            favoritePosts: [...prevUser.favoritePosts, newFavorite]
+        }));
+    };
+
+    const updateUserAfterRemoveFavorite = (postToRemove) => {
+        setUser(prevUser => ({
+            ...prevUser,
+            favoritePosts: prevUser.favoritePosts.filter(fav => 
+                !(fav.postToken === postToRemove.token && fav.imageUrl === postToRemove.imageUrl)
+            )
+        }));
     };
 
     const fetchPosts = () => {
@@ -351,7 +380,8 @@ const App = () => {
                         updatePostComment={updatePostComment}
                         updateLikesInPost={updateLikesInPost}
                         deletePost={deletePost}
-                        theme={theme}/>}
+                        theme={theme}
+                        getUserData={getUserData}/>}
                         />
                     <Route
                     path="login"
@@ -379,7 +409,11 @@ const App = () => {
                         deletePost={deletePost}
                         theme={theme}
                         changeTheme={changeTheme}
-                        logOut={logOut}/>}
+                        logOut={logOut}
+                        updateUserAfterFavorite={updateUserAfterFavorite}
+                        updateUserAfterRemoveFavorite={updateUserAfterRemoveFavorite}
+                        allPosts={allPosts}
+                        />}
                     />
                     <Route
                     path="/user-posts/:token/:id"

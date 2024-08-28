@@ -3,14 +3,23 @@ import { useState, useEffect } from "react";
 import CommentModal from "../CommentModal";
 import { useNavigate } from "react-router-dom";
 
-export default function UserPost({ deletePost, data, post, user, updatePostAfterComment, updatePostComment, updateLikesInPost, theme, token, id }) {
+export default function UserPost({ deletePost, data, post, user, updateUserAfterRemoveFavorite, updatePostAfterComment, updatePostComment, updateLikesInPost, updateUserAfterFavorite, theme, token, id }) {
     const date = new Date();
     const range = date - post.time;
     const [likes, setLikes] = useState(post.likes || []);
     const [isLiked, setIsLiked] = useState(likes.includes(localStorage.getItem("id")));
     const [isCommentModal, setIsCommentModal] = useState(false);
     const [postAva, setPostAva] = useState('');
+    const [isFavorite, setIsFavorite] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        user.favoritePosts?.forEach(fav => {
+            if (fav.postToken === post.token && fav.imageUrl === post.imageUrl) {
+                setIsFavorite(true);
+            }
+        })
+    }, [user, isCommentModal])
 
     const getPostAva = async () => {
         try {
@@ -128,6 +137,21 @@ export default function UserPost({ deletePost, data, post, user, updatePostAfter
         navigate(`/user-posts/${token}/${id}`);
     }
 
+    const handleFavorite = async (action) => {
+        const payload = { postToken: post.token, token: localStorage.getItem("id"), imageUrl: post.imageUrl };
+        try {
+            await fetch(`https://linstagramserver-1.onrender.com/${action}`, {
+                method: "POST",
+                body: JSON.stringify(payload),
+                headers: { "Content-Type": "application/json" },
+            });
+            setIsFavorite(action === 'add-favorite');
+            action === 'add-favorite' ? updateUserAfterFavorite({ postToken: post.token, imageUrl: post.imageUrl, time: Date.now() }) : updateUserAfterRemoveFavorite(post);
+        } catch (error) {
+            console.error(`Error ${action} like:`, error);
+        }
+    };
+
     return (
         <div className={s.container}>
             {isCommentModal && (
@@ -145,6 +169,8 @@ export default function UserPost({ deletePost, data, post, user, updatePostAfter
                     updatePostAfterComment={updatePostAfterComment}
                     updatePostComment={updatePostComment}
                     updateLikesInPost={updateLikesInPost}
+                    isFavorite={isFavorite}
+                    handleFavorite={handleFavorite}
                     theme={theme}
                 />
             )}

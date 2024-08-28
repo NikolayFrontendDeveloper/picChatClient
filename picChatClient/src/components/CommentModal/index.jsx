@@ -4,7 +4,7 @@ import Comment from '../Comment';
 import PostFuncModal from '../PostFuncModal'
 import { useNavigate } from 'react-router-dom';
 
-export default function CommentModal({ theme, deletePost, postAva, data, user, cancelModal, post, isLiked, addLike, removeLike, likes, updatePostAfterComment, updatePostComment, updateLikesInPost }) {
+export default function CommentModal({ theme, isFavorite, handleFavorite, deletePost, postAva, data, user, cancelModal, post, isLiked, addLike, removeLike, likes, updatePostAfterComment, updatePostComment, updateLikesInPost }) {
     const [inputText, setInputText] = useState('');
     const [comments, setComments] = useState(post.comments || []);
     const [isModal, setIsModal] = useState(false);
@@ -221,6 +221,11 @@ export default function CommentModal({ theme, deletePost, postAva, data, user, c
                             )}
                             <img src={`/${theme}/comment-icon.svg`} alt="comment icon" />
                         </div>
+                        <img
+                            onClick={() => handleFavorite(isFavorite ? 'delete-favorite' : 'add-favorite')}
+                            src={isFavorite ? `/${theme}/favorite-icon.svg` : `/${theme}/not-favorite-icon.svg`}
+                            alt="comment icon"
+                        />
                     </div>
                     <p className={s.likes_amount}>{likes.length} likes</p>
                     <div className={s.comment_post_wrapper}>

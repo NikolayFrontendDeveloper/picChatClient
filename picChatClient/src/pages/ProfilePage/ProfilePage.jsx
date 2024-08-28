@@ -7,26 +7,56 @@ import axios from 'axios';
 import SubscribeModal from "../../components/SubscribeModal";
 import MenuModal from "../../components/MenuModal";
 
-export default function ProfilePage({ theme, changeTheme, logOut, updateDataAfterRemoveSubscribe, updateDataAfterSubscribe, deletePost, data, updatePostAfterComment, updatePostComment, updateLikesInPost, updateAva }) {
+export default function ProfilePage({ allPosts, theme, user, changeTheme, logOut, updateUserAfterRemoveFavorite, updateDataAfterRemoveSubscribe, updateDataAfterSubscribe, deletePost, data, updatePostAfterComment, updatePostComment, updateLikesInPost, updateAva, updateUserAfterFavorite }) {
     const [modal, setModal] = useState(false);
     const [previewUrl, setPreviewUrl] = useState('');
     const { token } = useParams();
-    const [user, setUser] = useState(data.find(user => user._id === token) || null);
-    const [currentUser, setCurrentUser] = useState(data.find(user => user._id === localStorage.getItem('id')) || null);
-    const [isSigned, setIsSigned] = useState(currentUser?.subscriptions?.includes(token) || false);
-    const [subscribers, setSubscribers] = useState(user.subscribers || []);
-    const [subscriptions, setSubscriptions] = useState(user.subscriptions || []);
+    const [userByToken, setUserByToken] = useState(data.find(user => user._id === token) || null);
+    const [isSigned, setIsSigned] = useState(user?.subscriptions?.includes(token) || false);
+    const [subscribers, setSubscribers] = useState([]);
+    const [subscriptions, setSubscriptions] = useState([]);
     const [subscribersModal, setSubscribersModal] = useState(false);
     const [subscriptionsModal, setSubscriptionsModal] = useState(false);
     const [menuModal, setMenuModal] = useState(false);
+    const [activeTab, setActiveTab] = useState("posts");
+    const [favorite, setFavorite] = useState([]);
 
     useEffect(() => {
-        setUser(data.find(user => user._id === token) || null);
-        setSubscriptions(user.subscriptions || []);
-        setSubscribers(user.subscribers || []);
-        setIsSigned(currentUser?.subscriptions?.includes(token) || false);
-        setCurrentUser(data.find(user => user._id === localStorage.getItem('id')) || null);
-    }, [token, data, currentUser])
+        const newUser = data.find(user => user._id === token) || null;
+        setUserByToken(newUser);
+        if (newUser) {
+            setSubscriptions(newUser.subscriptions || []);
+            setSubscribers(newUser.subscribers || []);
+            setIsSigned(user?.subscriptions?.includes(token) || false);
+        } else {
+            setSubscriptions([]);
+            setSubscribers([]);
+            setIsSigned(false);
+        }
+    }, [token, data, user])
+
+    useEffect(() => {
+        const fetchFavoritePosts = async () => {
+            if (user?.favoritePosts) {
+                const sortedFavoritePosts = [...user.favoritePosts].sort((a, b) => b.time - a.time);
+                const favoritePosts = allPosts?.filter(post =>
+                    sortedFavoritePosts.some(fav => fav.postToken === post.token && fav.imageUrl === post.imageUrl)
+                );
+                setFavorite(favoritePosts || []);
+            } else {
+                setFavorite([]);
+            }
+        };
+
+        fetchFavoritePosts();
+
+        console.log(user)
+    }, [allPosts, user]);
+    
+
+    const handleTabClick = (tab) => {
+        setActiveTab(tab);
+    };
 
     const cancelMenuModal = () => {
         setMenuModal(false);
@@ -146,13 +176,9 @@ export default function ProfilePage({ theme, changeTheme, logOut, updateDataAfte
         setSubscriptionsModal(false);
     }
 
-    if (!user) {
-        return <div>User not found</div>;
-    }
-
     return (
         <>
-            {user && (
+            {userByToken && (
                 <div className={s.page_wrapper}>
                     {menuModal && (
                             <MenuModal
@@ -174,7 +200,7 @@ export default function ProfilePage({ theme, changeTheme, logOut, updateDataAfte
                             updateDataAfterSubscribe={updateDataAfterSubscribe}
                             updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe}
                             cancelModal={cancelSubscribersModal}
-                            subscribers={user.subscribers}
+                            subscribers={userByToken.subscribers}
                             data={data}
                             theme={theme}/>
                     )}
@@ -183,26 +209,26 @@ export default function ProfilePage({ theme, changeTheme, logOut, updateDataAfte
                             updateDataAfterSubscribe={updateDataAfterSubscribe}
                             updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe}
                             cancelModal={cancelSubscriptionsModal}
-                            subscriptions={user.subscriptions}
+                            subscriptions={userByToken.subscriptions}
                             data={data}
                             theme={theme}/>
                     )}
                     <div className={s.upper_user_data}>
-                        <p className={s.upper_user_data_name}>{user.username}</p>
+                        <p className={s.upper_user_data_name}>{userByToken.username}</p>
                         <button onClick={() => {setMenuModal(true)}} className={s.menu_btn}>
                             <img className={s.aside_icons} src={`/${theme}/menu-icon.svg`} alt="menu-icon" />
                         </button>
                     </div>
                     <div className={s.user_information}>
-                        { previewUrl || user.avaUrl ? (
-                            <img onClick={() => {setModal(true)}} className={s.profile_img} src={previewUrl || user.avaUrl} alt="ava icon" />
+                        { previewUrl || userByToken.avaUrl ? (
+                            <img onClick={() => {setModal(true)}} className={s.profile_img} src={previewUrl || userByToken.avaUrl} alt="ava icon" />
                         ) : (
                             <img onClick={() => {setModal(true)}} className={s.profile_img} src={`/${theme}/ava-icon.svg`} alt="ava icon" />
                         )}
                         <div className={s.user_data_wrapper}>
                             <div className={s.user_data_upper_line}>
-                                <p className={s.user_data_name}>{user.username}</p>
-                                {user._id === localStorage.getItem('id') ? (
+                                <p className={s.user_data_name}>{userByToken.username}</p>
+                                {userByToken._id === localStorage.getItem('id') ? (
                                     <>
                                         <button className={s.edit_btn}>Edit</button>
                                         <button className={s.check_archiv_btn}>Check Archiv</button>
@@ -218,8 +244,8 @@ export default function ProfilePage({ theme, changeTheme, logOut, updateDataAfte
                                 )}
                             </div>
                             <div className={s.user_data_under_line}>
-                                {user && user.posts && user.posts.length > 0 ? (
-                                    <p className={s.posts_amount}>{user.posts.length} Posts</p>
+                                {userByToken && userByToken.posts && userByToken.posts.length > 0 ? (
+                                    <p className={s.posts_amount}>{userByToken.posts.length} Posts</p>
                                 ) : (
                                     <p className={s.posts_amount}>No Posts</p>
                                 )}
@@ -231,28 +257,91 @@ export default function ProfilePage({ theme, changeTheme, logOut, updateDataAfte
                     <div className={s.story_wrapper}></div>
                     <div className={s.posts_wrapper}>
                         <div className={s.choose_posts_wrapper}>
-                            <p className={s.choose_posts_btn}>Posts</p>
+                            <p
+                                className={`${s.choose_posts_btn} ${activeTab === "posts" ? s.active : ""}`}
+                                onClick={() => handleTabClick("posts")}
+                            >
+                                Posts
+                            </p>
+                            {token === localStorage.getItem('id') && (
+                                <p
+                                    className={`${s.choose_posts_btn} ${activeTab === "favorites" ? s.active : ""}`}
+                                    onClick={() => handleTabClick("favorites")}
+                                >
+                                    Favorites
+                                </p>
+                            )}
                         </div>
                         <div className={s.posts_container}>
-                            {user && user.posts && user.posts.length > 0 ? (
-                                user.posts.sort((a, b) => b.time - a.time).map((post, index) => (
+                        {token === localStorage.getItem('id') ? (
+                            activeTab === "posts" ? (
+                                userByToken && userByToken.posts && userByToken.posts.length > 0 ? (
+                                    userByToken.posts.sort((a, b) => b.time - a.time).map((post, index) => (
+                                        <UserPost
+                                            key={index}
+                                            id={index}
+                                            deletePost={deletePost}
+                                            data={data}
+                                            post={post}
+                                            user={user}
+                                            updatePostAfterComment={updatePostAfterComment}
+                                            updatePostComment={updatePostComment}
+                                            updateLikesInPost={updateLikesInPost}
+                                            updateUserAfterFavorite={updateUserAfterFavorite}
+                                            updateUserAfterRemoveFavorite={updateUserAfterRemoveFavorite}
+                                            theme={theme}
+                                            token={token}
+                                        />
+                                    ))
+                                ) : (
+                                    <p>No posts available.</p>
+                                )
+                            ) : (
+                                favorite && favorite.length > 0 ? (
+                                    favorite.sort((a, b) => b.time - a.time).map((post, index) => (
+                                        <UserPost
+                                            key={index}
+                                            id={index}
+                                            deletePost={deletePost}
+                                            data={data}
+                                            post={post}
+                                            user={user}
+                                            updatePostAfterComment={updatePostAfterComment}
+                                            updatePostComment={updatePostComment}
+                                            updateLikesInPost={updateLikesInPost}
+                                            updateUserAfterFavorite={updateUserAfterFavorite}
+                                            updateUserAfterRemoveFavorite={updateUserAfterRemoveFavorite}
+                                            theme={theme}
+                                            token={token}
+                                        />
+                                    ))
+                                ) : (
+                                    <p>No favorite posts available.</p>
+                                )
+                            )
+                        ) : (
+                            userByToken && userByToken.posts && userByToken.posts.length > 0 ? (
+                                userByToken.posts.sort((a, b) => b.time - a.time).map((post, index) => (
                                     <UserPost
                                         key={index}
                                         id={index}
                                         deletePost={deletePost}
                                         data={data}
                                         post={post}
-                                        user={user}
+                                        user={userByToken}
                                         updatePostAfterComment={updatePostAfterComment}
                                         updatePostComment={updatePostComment}
                                         updateLikesInPost={updateLikesInPost}
+                                        updateUserAfterFavorite={updateUserAfterFavorite}
+                                        updateUserAfterRemoveFavorite={updateUserAfterRemoveFavorite}
                                         theme={theme}
                                         token={token}
                                     />
                                 ))
                             ) : (
                                 <p>No posts available.</p>
-                            )}
+                            )
+                        )}
                         </div>
                     </div>
                 </div>
