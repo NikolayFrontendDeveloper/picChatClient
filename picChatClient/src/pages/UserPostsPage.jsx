@@ -4,7 +4,7 @@ import post from "../components/Post/styles.module.scss"
 import { useState, useEffect, useCallback, useRef  } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-export default function MainPage({ theme, deletePost, user, posts, data, updateDataAfterSubscribe, updateDataAfterRemoveSubscribe, updatePostAfterComment, updatePostComment, updateLikesInPost }) {
+export default function MainPage({ favorite, activeTab, getUserData, theme, deletePost, user, posts, data, updateDataAfterSubscribe, updateDataAfterRemoveSubscribe, updatePostAfterComment, updatePostComment, updateLikesInPost }) {
     const navigate = useNavigate();
     const [userPosts, setUserPosts] = useState([]);
     const { token } = useParams();
@@ -49,20 +49,42 @@ export default function MainPage({ theme, deletePost, user, posts, data, updateD
     return (
         <div className={s.container}>
             <div ref={postsRef} className={s.posts_container}>
-                {Array.isArray(userPosts) && userPosts.length > 0 ? (
-                    userPosts.sort((a, b) => b.time - a.time).map((post, index) => (
-                        <Post key={index}
-                            data={data}
-                            user={user}
-                            post={post}
-                            updatePostAfterComment={updatePostAfterComment}
-                            updatePostComment={updatePostComment}
-                            updateLikesInPost={updateLikesInPost}
-                            deletePost={deletePost}
-                            theme={theme} />
-                    ))
+                {activeTab === "posts" ? (
+                    Array.isArray(userPosts) && userPosts.length > 0 ? (
+                        userPosts.sort((a, b) => b.time - a.time).map((post, index) => (
+                            <Post key={index}
+                                data={data}
+                                user={user}
+                                post={post}
+                                updatePostAfterComment={updatePostAfterComment}
+                                updatePostComment={updatePostComment}
+                                updateLikesInPost={updateLikesInPost}
+                                deletePost={deletePost}
+                                theme={theme}
+                                getUserData={getUserData}
+                                />
+                        ))
+                    ) : (
+                        <p>No available posts</p>
+                    )
                 ) : (
-                    <p>No available posts</p>
+                    Array.isArray(favorite) && favorite.length > 0 ? (
+                        favorite.sort((a, b) => b.time - a.time).map((post, index) => (
+                            <Post key={index}
+                                data={data}
+                                user={user}
+                                post={post}
+                                updatePostAfterComment={updatePostAfterComment}
+                                updatePostComment={updatePostComment}
+                                updateLikesInPost={updateLikesInPost}
+                                deletePost={deletePost}
+                                theme={theme}
+                                getUserData={getUserData}
+                                />
+                        ))
+                    ) : (
+                        <p>No available posts</p>
+                    )
                 )}
             </div>
         </div>

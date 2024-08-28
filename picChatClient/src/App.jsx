@@ -20,6 +20,8 @@ const App = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [allPosts, setAllPosts] = useState([]);
+    const [favorite, setFavorite] = useState([]);
+    const [activeTab, setActiveTab] = useState("posts");
 
     useEffect(() => {
         getData();
@@ -32,6 +34,24 @@ const App = () => {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
     }, [theme]);
+
+    useEffect(() => {
+        const fetchFavoritePosts = async () => {
+            if (user?.favoritePosts) {
+                const sortedFavoritePosts = [...user.favoritePosts].sort((a, b) => b.time - a.time);
+                const favoritePosts = allPosts?.filter(post =>
+                    sortedFavoritePosts.some(fav => fav.postToken === post.token && fav.imageUrl === post.imageUrl)
+                );
+                setFavorite(favoritePosts || []);
+            } else {
+                setFavorite([]);
+            }
+        };
+
+        fetchFavoritePosts();
+
+        console.log(user)
+    }, [allPosts, user]);
 
     const changeTheme = () => {
         setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
@@ -413,6 +433,9 @@ const App = () => {
                         updateUserAfterFavorite={updateUserAfterFavorite}
                         updateUserAfterRemoveFavorite={updateUserAfterRemoveFavorite}
                         allPosts={allPosts}
+                        favorite={favorite}
+                        activeTab={activeTab}
+                        setActiveTab={setActiveTab}
                         />}
                     />
                     <Route
@@ -430,7 +453,11 @@ const App = () => {
                         deletePost={deletePost}
                         theme={theme}
                         changeTheme={changeTheme}
-                        logOut={logOut}/>}
+                        logOut={logOut}
+                        favorite={favorite}
+                        getUserData={getUserData}
+                        activeTab={activeTab}
+                        />}
                     />
                 </Route>
             </Routes>

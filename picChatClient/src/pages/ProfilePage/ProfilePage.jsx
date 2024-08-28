@@ -7,7 +7,7 @@ import axios from 'axios';
 import SubscribeModal from "../../components/SubscribeModal";
 import MenuModal from "../../components/MenuModal";
 
-export default function ProfilePage({ allPosts, theme, user, changeTheme, logOut, updateUserAfterRemoveFavorite, updateDataAfterRemoveSubscribe, updateDataAfterSubscribe, deletePost, data, updatePostAfterComment, updatePostComment, updateLikesInPost, updateAva, updateUserAfterFavorite }) {
+export default function ProfilePage({ favorite, activeTab, setActiveTab, theme, user, changeTheme, logOut, updateUserAfterRemoveFavorite, updateDataAfterRemoveSubscribe, updateDataAfterSubscribe, deletePost, data, updatePostAfterComment, updatePostComment, updateLikesInPost, updateAva, updateUserAfterFavorite }) {
     const [modal, setModal] = useState(false);
     const [previewUrl, setPreviewUrl] = useState('');
     const { token } = useParams();
@@ -18,8 +18,6 @@ export default function ProfilePage({ allPosts, theme, user, changeTheme, logOut
     const [subscribersModal, setSubscribersModal] = useState(false);
     const [subscriptionsModal, setSubscriptionsModal] = useState(false);
     const [menuModal, setMenuModal] = useState(false);
-    const [activeTab, setActiveTab] = useState("posts");
-    const [favorite, setFavorite] = useState([]);
 
     useEffect(() => {
         const newUser = data.find(user => user._id === token) || null;
@@ -34,26 +32,7 @@ export default function ProfilePage({ allPosts, theme, user, changeTheme, logOut
             setIsSigned(false);
         }
     }, [token, data, user])
-
-    useEffect(() => {
-        const fetchFavoritePosts = async () => {
-            if (user?.favoritePosts) {
-                const sortedFavoritePosts = [...user.favoritePosts].sort((a, b) => b.time - a.time);
-                const favoritePosts = allPosts?.filter(post =>
-                    sortedFavoritePosts.some(fav => fav.postToken === post.token && fav.imageUrl === post.imageUrl)
-                );
-                setFavorite(favoritePosts || []);
-            } else {
-                setFavorite([]);
-            }
-        };
-
-        fetchFavoritePosts();
-
-        console.log(user)
-    }, [allPosts, user]);
     
-
     const handleTabClick = (tab) => {
         setActiveTab(tab);
     };
