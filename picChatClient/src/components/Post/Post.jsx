@@ -12,7 +12,7 @@ export default function Post({ data, user, post, deletePost, updatePostAfterComm
     const navigate = useNavigate();
 
     useEffect(() => {
-        user.favoritePosts?.forEach(fav => {
+        user?.favoritePosts?.forEach(fav => {
             if (fav.postToken === post.token && fav.imageUrl === post.imageUrl) {
                 setIsFavorite(true);
             }
