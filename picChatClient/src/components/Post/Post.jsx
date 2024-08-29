@@ -10,6 +10,8 @@ export default function Post({ data, user, post, deletePost, updatePostAfterComm
     const [postAva, setPostAva] = useState('');
     const [isFavorite, setIsFavorite] = useState(false);
     const navigate = useNavigate();
+    const [waitingClick, setWaitingClick] = useState(null);
+    const [lastClick, setLastClick] = useState(0);
 
     useEffect(() => {
         user?.favoritePosts?.forEach(fav => {
@@ -74,6 +76,42 @@ export default function Post({ data, user, post, deletePost, updatePostAfterComm
         }
     };
 
+    const likePost = async () => {
+        const payload = { user: post.name, token: localStorage.getItem("id"), imageUrl: post.imageUrl };
+        if (!isLiked) {
+            try {
+                await fetch('https://linstagramserver-1.onrender.com/posts/like', {
+                    method: "POST",
+                    body: JSON.stringify(payload),
+                    headers: { "Content-Type": "application/json" },
+                });
+                const updatedLikes = [...likes, payload.token];
+                setLikes(updatedLikes);
+                setIsLiked(true);
+                updateLikesInPost(post.imageUrl, updatedLikes);
+            } catch (error) {
+                console.error(`Error like:`, error);
+            }
+        }
+    };
+
+    const processClick = (e) => {
+        if(lastClick&&e.timeStamp - lastClick < 250 && 
+        waitingClick){
+            setLastClick(0);
+            clearTimeout(waitingClick);
+            setWaitingClick(null);
+            likePost();
+            // console.log('double click')
+        } else{
+            setLastClick(e.timeStamp);
+            setWaitingClick(setTimeout(()=>{
+            setWaitingClick(null);
+            }, 251))
+            // console.log('single click')
+        }
+    }
+
     const handleFavorite = async (action) => {
         const payload = { postToken: post.token, token: localStorage.getItem("id"), imageUrl: post.imageUrl };
         try {
@@ -121,7 +159,7 @@ export default function Post({ data, user, post, deletePost, updatePostAfterComm
                 )}
                 <img
                     className={s.post_img}
-                    onClick={() => setIsCommentModal(true)}
+                    onClick={(e)=>processClick(e)}
                     src={post.imageUrl}
                     alt="user image"
                 />
