@@ -179,8 +179,6 @@ export default function ProfilePage({ favorite, activeTab, setActiveTab, theme, 
             })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
-                window.location.reload();
             });
     }
 
