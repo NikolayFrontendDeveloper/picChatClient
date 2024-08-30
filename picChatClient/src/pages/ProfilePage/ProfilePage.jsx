@@ -20,18 +20,25 @@ export default function ProfilePage({ favorite, activeTab, setActiveTab, theme, 
     const [menuModal, setMenuModal] = useState(false);
 
     useEffect(() => {
-        const newUser = data.find(user => user._id === token) || null;
-        setUserByToken(newUser);
-        if (newUser) {
-            setSubscriptions(newUser.subscriptions || []);
-            setSubscribers(newUser.subscribers || []);
-            setIsSigned(user?.subscriptions?.includes(token) || false);
-        } else {
-            setSubscriptions([]);
-            setSubscribers([]);
-            setIsSigned(false);
+        const fetchUser = async () => {
+            const newUser = await data.find(user => user._id === token) || null;
+            setUserByToken(newUser);
+            if (newUser) {
+                setSubscriptions(newUser.subscriptions || []);
+                setSubscribers(newUser.subscribers || []);
+                setIsSigned(newUser?.subscribers?.includes(localStorage.getItem('id')));
+            } else {
+                setSubscriptions([]);
+                setSubscribers([]);
+                setIsSigned(false);
+            }
         }
+
+        fetchUser();
     }, [token, data, user])
+
+    useEffect(() => {
+    }, [isSigned])
     
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -93,7 +100,7 @@ export default function ProfilePage({ favorite, activeTab, setActiveTab, theme, 
         const payload = {
             token: localStorage.getItem('id'),
             targetToken: token
-        }
+        };
 
         fetch("https://linstagramserver-1.onrender.com/subscribe", {
             method: "POST",
@@ -105,31 +112,31 @@ export default function ProfilePage({ favorite, activeTab, setActiveTab, theme, 
         .catch((err) => {
             console.log(err);
         })
-        updateDataAfterSubscribe(localStorage.getItem('id'), token)
+        updateDataAfterSubscribe(localStorage.getItem('id'), token);
         setIsSigned(true);
-        setSubscribers(subscribers + 1);
     }
 
     const removeSubscribe = () => {
         const payload = {
             token: localStorage.getItem('id'),
             targetToken: token
+        };
+    
+        try {
+            fetch("https://linstagramserver-1.onrender.com/remove-subscribe", {
+                method: "POST",
+                body: JSON.stringify(payload),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+        } catch (err) {
+            console.log(err);
         }
 
-        fetch("https://linstagramserver-1.onrender.com/remove-subscribe", {
-            method: "POST",
-            body: JSON.stringify(payload),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-        updateDataAfterRemoveSubscribe(localStorage.getItem('id'), token)
+        updateDataAfterRemoveSubscribe(localStorage.getItem('id'), token);
         setIsSigned(false);
-        setSubscribers(subscribers - 1);
-    }
+    };    
 
     const removeAva = () => {
         removeAvaFromCloudinary();

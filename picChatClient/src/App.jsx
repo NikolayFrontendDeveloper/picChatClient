@@ -95,7 +95,6 @@ const App = () => {
                     subscribers: [...(user.subscribers || []), token]
                 }
             }
-
             return user;
         });
         setData(updatedData);
