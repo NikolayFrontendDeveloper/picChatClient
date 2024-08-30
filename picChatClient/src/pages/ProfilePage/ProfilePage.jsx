@@ -163,20 +163,23 @@ export default function ProfilePage({ favorite, activeTab, setActiveTab, theme, 
     }
 
     const removeAvaFromCloudinary = () => {
-        const parts = url.split('/');
-        const publicIdWithExtension = parts[parts.length - 1];
-        const publicId = publicIdWithExtension.split('.')[0];
-        if (publicId) {
-            fetch("https://linstagramserver-1.onrender.com/delete-image", {
-                method: "POST",
-                body: JSON.stringify({
-                    "publicId": publicId,
-                    "typeFile": "image"
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
+        if (userByToken.avaUrl) {
+            const parts = userByToken.avaUrl.split('/');
+            const publicIdWithExtension = parts[parts.length - 1];
+            const publicId = publicIdWithExtension.split('.')[0];
+
+            if (publicId) {
+                fetch("https://linstagramserver-1.onrender.com/delete-image", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        "publicId": publicId,
+                        "typeFile": "image"
+                    }),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+            }
         }
     }
 
