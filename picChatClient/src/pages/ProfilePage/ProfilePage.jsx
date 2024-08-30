@@ -161,6 +161,7 @@ export default function ProfilePage({ favorite, activeTab, setActiveTab, theme, 
 
     const removeAvaFromCloudinary = () => {
         function extractPublicId(url) {
+            console.log(url);
             const parts = url.split('/');
             const publicIdWithExtension = parts[parts.length - 1];
             const publicId = publicIdWithExtension.split('.')[0];
