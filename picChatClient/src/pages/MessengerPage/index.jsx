@@ -3,11 +3,16 @@ import { useEffect, useState, useRef  } from 'react';
 import { useParams } from 'react-router-dom';
 import Message from '../../components/Message';
 
-export default function MessengerPage ({ user, data, layoutWidth, messages, theme, socket}) {
+export default function MessengerPage ({ user, data, layoutWidth, messages, getMessages, theme, socket}) {
     const [inputText, setInputText] = useState('');
     const { chatId } = useParams();
     const [chatData, setChatData] = useState(null);
     const [userByToken, setUserByToken] = useState(null);
+
+    useEffect(() => {
+        getMessages();
+        console.log(messages)
+    }, [])
 
     useEffect(() => {
         const fetchData = async () => {

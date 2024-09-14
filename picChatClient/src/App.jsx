@@ -516,6 +516,7 @@ const App = () => {
                             user={user}
                             data={data}
                             messages={messages}
+                            getMessages={getMessages}
                             theme={theme}
                         />}
                     />
