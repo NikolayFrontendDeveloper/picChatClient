@@ -56,29 +56,37 @@ export default function UserPost({ deletePost, data, post, user, updateUserAfter
 
     let time;
     const getTime = () => {
-        if (range <= 60000) {
+        const seconds = Math.floor(range / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+        const weeks = Math.floor(days / 7);
+        const months = Math.floor(days / 30); // approximation
+        const years = Math.floor(days / 365); // approximation
+    
+        if (seconds <= 60) {
             time = 'just now';
-        } else if (range <= 60000 * 5) {
+        } else if (minutes <= 5) {
             time = '5 minutes ago';
-        } else if (range <= 3600000) {
+        } else if (hours < 1) {
             time = 'one hour ago';
-        } else if (range <= 3600000 * 24) {
+        } else if (hours < 24) {
             time = 'today';
-        } else if (range <= 3600000 * 48) {
+        } else if (days < 2) {
             time = 'yesterday';
-        } else if (range <= 3600000 * 24 * 7) {
+        } else if (days < 7) {
             time = 'one week ago';
-        } else if (range <= 3600000 * 24 * 7 * 4) {
+        } else if (weeks < 4) {
             time = 'one month ago';
-        } else if (range.getFullYear() < 1) {
-            time = `${range.getMonth()} months ago`;
-        } else if (range.getFullYear() === 1) {
+        } else if (months < 12) {
+            time = `${months} months ago`;
+        } else if (years === 1) {
             time = 'one year ago';
         } else {
-            time = `${range.getFullYear()} years ago`;
+            time = `${years} years ago`;
         }
     };
-    getTime();
+    getTime();    
 
     const addLike = async () => {
         const payload = {

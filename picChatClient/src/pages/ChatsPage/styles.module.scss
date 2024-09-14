@@ -1,0 +1,17 @@
+@import '../../variables';
+
+.container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .correspondence_btn {
+        background-color: #0095f6;
+        padding: 10px;
+        color: white;
+        border-radius: 10px;
+    }
+}

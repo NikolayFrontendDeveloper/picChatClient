@@ -7,6 +7,9 @@ import SigninPage from "./pages/SigninPage";
 import AddPage from "./pages/AddPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import UserPostsPage from "./pages/UserPostsPage";
+import ChatsPage from "./pages/ChatsPage";
+import MessengerPage from "./pages/MessengerPage";
+import io from 'socket.io-client';
 import "./reset.css";
 import "./styles.module.scss";
 import './_variables.scss';
@@ -22,12 +25,17 @@ const App = () => {
     const [allPosts, setAllPosts] = useState([]);
     const [favorite, setFavorite] = useState([]);
     const [activeTab, setActiveTab] = useState("posts");
+    const [layoutWidth, setLayoutWidth] = useState('');
+    const [messages, setMessages] = useState([]);
+    // const socket = io.connect("http://localhost:3000");
+    const socket = io.connect("https://linstagramserver-1.onrender.com");
 
     useEffect(() => {
         getData();
         getUserData();
         fetchPosts();
         getAllPosts();
+        getMessages();
     }, []);
 
     useEffect(() => {
@@ -67,6 +75,14 @@ const App = () => {
             .catch(e => {
                 setLoading(false);
             });
+    }
+
+    const getMessages = () => {
+        fetch("https://linstagramserver-1.onrender.com/get-messages")
+            .then((res) => res.json())
+            .then((data) => {
+                setMessages(data);
+            })
     }
 
     const getAllPosts = async () => {
@@ -156,6 +172,35 @@ const App = () => {
             )
         }));
     };
+
+    const updateMessagesAfterAddingPersonalChat = (newChat) => {
+        setMessages(prev => [...prev, newChat])
+    }
+
+    const updateUserAfterAddingPersonalChat = (chatId, targetToken) => {
+        setUser(prev => ({
+            ...prev,
+            chats: [...prev.chats || [], {
+                personalChat: true,
+                chatId: chatId
+            }]
+        }))
+        setData(data.map(user => {
+            if (user._id === targetToken || user._id === localStorage.getItem('id')) {
+                return {
+                    ...user,
+                    chats: [
+                        ...(user.chats || []),
+                        {
+                            personalChat: true,
+                            chatId: chatId
+                        }
+                    ]
+                };
+            }
+            return user;
+        }));
+    }
 
     const fetchPosts = () => {
         const payload = {
@@ -377,16 +422,12 @@ const App = () => {
         console.log(user);
     };
 
-    const test = () => {
-        console.log("Ok")
-    }
-
     if (loading) {
         return <div>Loading...</div>;
     } else {
         return (
             <Routes>
-                <Route path="/" element={<Layout id={id} logOut={logOut} user={user} data={data} changeTheme={changeTheme} theme={theme} />}>
+                <Route path="/" element={<Layout setLayoutWidth={setLayoutWidth} id={id} logOut={logOut} user={user} data={data} changeTheme={changeTheme} theme={theme} />}>
                     <Route index element={<MainPage
                         updateDataAfterSubscribe={updateDataAfterSubscribe}
                         updateDataAfterRemoveSubscribe={updateDataAfterRemoveSubscribe}
@@ -454,6 +495,28 @@ const App = () => {
                         favorite={favorite}
                         getUserData={getUserData}
                         activeTab={activeTab}
+                        />}
+                    />
+                    <Route
+                        path="/messages"
+                        element={<ChatsPage
+                            user={user}
+                            data={data}
+                            theme={theme}
+                            messages={messages}
+                            updateUserAfterAddingPersonalChat={updateUserAfterAddingPersonalChat}
+                            updateMessagesAfterAddingPersonalChat={updateMessagesAfterAddingPersonalChat}
+                        />}
+                    />
+                    <Route
+                        path="/messages/:chatId"
+                        element={<MessengerPage
+                            layoutWidth={layoutWidth}
+                            socket={socket}
+                            user={user}
+                            data={data}
+                            messages={messages}
+                            theme={theme}
                         />}
                     />
                 </Route>

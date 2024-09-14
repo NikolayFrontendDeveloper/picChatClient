@@ -1,0 +1,36 @@
+@import '../../variables';
+
+.message_right_wrapper, .message_left_wrapper {
+    display: flex;
+    gap: 0.5em;
+    width: 100%;
+
+    .message_text {
+        padding: 5px 10px;
+        border-radius: 10px;
+        font-family:  Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+    }
+}
+
+.message_right_wrapper {
+    justify-content: end;
+
+    .message_text {
+        background-color: rgb(65, 65, 255);
+        color: white;
+    }
+}
+
+.message_left_wrapper {
+    justify-content: start;
+
+    .sender_ava {
+        width: 30px;
+        border-radius: 50%;
+    }
+
+    .message_text {
+        background-color: gray;
+        color: var(--secondary-color);
+    }
+}
